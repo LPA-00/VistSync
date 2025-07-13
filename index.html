@@ -422,9 +422,9 @@
     </div>
 <script>
 const horarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
-let currentAgendamentos = []; // Agora é um array, pois virá direto da planilha
+let currentAgendamentos = []; 
 let selectedCollaborator = '';
-let selectedDate = ''; // Format: YYYY-MM-DD
+let selectedDate = ''; 
 let selectedHour = '';
 
 // --- DataManager usando Google Sheets ---
@@ -437,83 +437,70 @@ class DataManager {
         try {
             const res = await fetch(GOOGLE_SHEET_API_URL);
             if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
+                // Tenta ler a resposta de erro para obter mais detalhes
+                const errorText = await res.text();
+                console.error('Erro na resposta do fetch:', res.status, errorText);
+                throw new Error(`HTTP error! status: ${res.status} - ${errorText}`);
             }
+            // Seu Apps Script está retornando o array direto, não um objeto com a chave 'data'
             const data = await res.json();
-            return data.data || []; // A API do Apps Script geralmente retorna um objeto com uma chave 'data'
+            return data || []; 
         } catch (error) {
             console.error('Erro ao buscar agendamentos:', error);
-            alert('Erro ao carregar agendamentos. Verifique a URL do Google Apps Script ou as permissões.');
+            alert('Erro ao carregar agendamentos. Verifique a URL do Google Apps Script ou as permissões no console do navegador.');
             return [];
         }
     }
 
-    static async addAgendamento(data) {
+    static async addAgendamento(dataToSend) {
         try {
-            // Removido mode: 'no-cors' para permitir o envio de 'Content-Type'
-            // O Google Apps Script Web App geralmente lida com CORS.
             const res = await fetch(GOOGLE_SHEET_API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(dataToSend) 
             });
             if (!res.ok) {
-                // Tentativa de ler o erro da resposta se o servidor enviar JSON
+                // Tenta ler a resposta de erro para obter mais detalhes
                 const errorData = await res.json().catch(() => ({ message: res.statusText }));
                 throw new Error(`HTTP error! Status: ${res.status}, Message: ${errorData.message || 'Unknown error'}`);
             }
-            // Após adicionar, recarrega os agendamentos para manter o cache atualizado
-            currentAgendamentos = await this.getAllAgendamentosArray(); // Atualiza o cache global
+            // Verifica a resposta do Apps Script para ver se o agendamento foi recusado (já existe)
+            const responseBody = await res.json();
+            if (responseBody.success === false && responseBody.message) {
+                 throw new Error(responseBody.message); // Lança a mensagem do Apps Script como erro
+            }
+
+            currentAgendamentos = await this.getAllAgendamentosArray(); 
+            return true; 
         } catch (err) {
             console.error('Erro ao enviar agendamento para Google Sheets:', err);
-            alert('Falha ao agendar. Verifique a conexão ou o Google Apps Script. Detalhes: ' + err.message);
+            alert('Falha ao agendar. Detalhes: ' + err.message);
+            return false; 
         }
     }
 
     static async removeAgendamento(key) {
-        // Para uma implementação real, esta função precisaria enviar uma requisição
-        // ao seu Google Apps Script para remover a linha correspondente ao 'key'.
-        // O key seria idealmente o índice da linha ou um ID único da planilha.
-        // Como o `key` é ${item.Colaborador}_${item.Data}_${item.Hora}, não é um ID de linha direto.
-        // Você precisaria enviar os componentes do key (colaborador, data, hora) para o Apps Script
-        // e ele faria a busca e exclusão.
         alert('A remoção de agendamentos ainda não está implementada via API. Por favor, remova diretamente na planilha se necessário.');
-        // Exemplo de como poderia ser, exigindo modificação no Apps Script:
-        /*
-        try {
-            const [colaborador, data, hora] = key.split('_');
-            const res = await fetch(GOOGLE_SHEET_API_URL, {
-                method: 'POST', // Ou um método DELETE customizado no Apps Script
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'delete', colaborador, data, hora })
-            });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            currentAgendamentos = await this.getAllAgendamentosArray(); // Atualiza cache
-        } catch (err) {
-            console.error('Erro ao remover agendamento:', err);
-            alert('Falha ao remover agendamento. Verifique o Google Apps Script.');
-        }
-        */
     }
 
     static async getAllAgendamentosArray() {
         const dados = await this.getAgendamentos();
-        // Mapeia os nomes das colunas da planilha para os nomes usados no JS
+        // Mapeia os dados do Apps Script para a estrutura esperada no frontend
+        // Conforme seu Apps Script: { colaborador: row[0], data: row[6], hora: row[7], nome: row[1], empreendimento: row[2], local: row[3], telefone: row[4], observacoes: row[5] }
         return dados
             .map(item => ({
-                // Cria uma chave única para identificação, essencial para verificar agendamentos
-                key: `${item.Colaborador}_${item.Data}_${item.Hora}`,
-                colaborador: item.Colaborador,
-                data: item.Data, // Assumindo formato YYYY-MM-DD vindo da planilha
-                horario: item.Hora, // Assumindo formato HH:MM vindo da planilha
-                nome: item.Responsavel, // Ajuste para o nome da coluna na sua planilha
-                empreendimento: item.Empreendimento,
-                local: item.Local,
-                telefone: item.Telefone,
-                observacoes: item.Observacoes,
-                status: item.Status // Se houver coluna de status
+                // Usa as chaves em minúsculas que vêm do seu Apps Script
+                key: `${item.colaborador}_${item.data}_${item.hora}`, 
+                colaborador: item.colaborador,
+                data: item.data, 
+                horario: item.hora, 
+                nome: item.nome, 
+                empreendimento: item.empreendimento,
+                local: item.local,
+                telefone: item.telefone,
+                observacoes: item.observacoes
             }))
             .sort((a, b) => {
                 const dateA = new Date(`${a.data}T${a.horario}`);
@@ -524,35 +511,19 @@ class DataManager {
 
     static async clearAllData() {
         alert('Limpar todos os dados é uma operação crítica e DEVE ser implementada no Google Apps Script com devida segurança, não diretamente no frontend.');
-        // Exemplo de como poderia ser, exigindo modificação no Apps Script:
-        /*
-        try {
-            const res = await fetch(GOOGLE_SHEET_API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'clearAll' })
-            });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            currentAgendamentos = []; // Limpa o cache local
-        } catch (err) {
-            console.error('Erro ao limpar todos os dados:', err);
-            alert('Falha ao limpar todos os dados. Verifique o Google Apps Script.');
-        }
-        */
     }
 }
 // --- DataManager END ---
 
 async function initializeApp() {
-    currentAgendamentos = await DataManager.getAllAgendamentosArray(); // Carrega os dados da planilha
-    // Set default dates for filters
+    currentAgendamentos = await DataManager.getAllAgendamentosArray(); 
     const today = new Date().toISOString().split('T')[0];
     const dataInicioFilter = document.getElementById('filter-data-inicio');
     const dataFimFilter = document.getElementById('filter-data-fim');
     if (!dataInicioFilter.value) dataInicioFilter.value = today;
     if (!dataFimFilter.value) dataFimFilter.value = today;
     
-    showSection('agendamento'); // Default section
+    showSection('agendamento'); 
 }
 
 async function showSection(section) {
@@ -569,7 +540,6 @@ async function showSection(section) {
     if (section === 'relatorios') {
         await loadReports();
     } else {
-        // Recarregar agendamentos do G.Sheets sempre que voltar para a seção de agendamento
         currentAgendamentos = await DataManager.getAllAgendamentosArray();
         resetAgendamentoView();
     }
@@ -590,26 +560,25 @@ function selectCollaborator(nome) {
     document.getElementById('collaborators').classList.add('hidden');
     document.getElementById('selector').classList.remove('hidden');
     document.getElementById('selectedCollaborator').innerText = `Agendar para: ${nome}`;
-    document.getElementById('backButton').classList.remove('hidden'); // Show back button to select collaborator
-    // Default to week view or let user choose
+    document.getElementById('backButton').classList.remove('hidden'); 
 }
 
-function goBack() { // Main back button logic
+function goBack() { 
     const form = document.getElementById('form');
     const dayHours = document.getElementById('dayHours');
     const calendar = document.getElementById('calendar');
     const weekView = document.getElementById('weekView');
     const selector = document.getElementById('selector');
 
-    if (form.style.display === 'flex') { // If form is visible, go back to day/week view
-        cancelForm(); // This will handle going back to the correct view
-    } else if (!dayHours.classList.contains('hidden')) { // If dayHours is visible, go back to month calendar
+    if (form.style.display === 'flex') { 
+        cancelForm(); 
+    } else if (!dayHours.classList.contains('hidden')) { 
         showMonth();
-    } else if (!calendar.classList.contains('hidden') || !weekView.classList.contains('hidden')) { // If calendar or weekView is visible, go to selector
+    } else if (!calendar.classList.contains('hidden') || !weekView.classList.contains('hidden')) { 
         clearScreensAndForm();
         selector.classList.remove('hidden');
-        document.getElementById('backButton').classList.remove('hidden'); // Keep back button to go to collaborators
-    } else if (!selector.classList.contains('hidden')) { // If selector is visible, go to collaborators
+        document.getElementById('backButton').classList.remove('hidden'); 
+    } else if (!selector.classList.contains('hidden')) { 
         resetAgendamentoView();
     }
 }
@@ -623,12 +592,12 @@ async function showMonth() {
 
     const today = new Date();
     const year = today.getFullYear();
-    const month = today.getMonth(); // 0-indexed
+    const month = today.getMonth(); 
 
     const monthName = today.toLocaleString('pt-BR', { month: 'long' });
     calendarEl.innerHTML = `<h2>${monthName.charAt(0).toUpperCase() + monthName.slice(1)} / ${year}</h2>`;
 
-    const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 (Sun) - 6 (Sat)
+    const firstDayOfMonth = new Date(year, month, 1).getDay(); 
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     const grid = document.createElement('div');
@@ -638,30 +607,27 @@ async function showMonth() {
     weekDays.forEach(day => grid.innerHTML += `<div class='header-cell'>${day}</div>`);
 
     for (let i = 0; i < firstDayOfMonth; i++) {
-        grid.innerHTML += `<div></div>`; // Empty cells for days before month starts
+        grid.innerHTML += `<div></div>`; 
     }
 
-    // Carrega agendamentos SEMPRE do Google Sheets aqui
-    // Isso garante que você verá os agendamentos de outras pessoas
     currentAgendamentos = await DataManager.getAllAgendamentosArray(); 
 
     for (let d = 1; d <= daysInMonth; d++) {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const currentDate = new Date(dateStr + 'T00:00:00'); // Para comparação de data, evite problemas de fuso horário
+        const currentDate = new Date(dateStr + 'T00:00:00'); 
         const todayAtMidnight = new Date(new Date().toISOString().split('T')[0] + 'T00:00:00');
 
         let hasAvailable = false;
-        if (currentDate >= todayAtMidnight) { // Only check availability for today or future
+        if (currentDate >= todayAtMidnight) { 
              hasAvailable = horarios.some(h => {
                  const key = `${selectedCollaborator}_${dateStr}_${h}`;
-                 // Verifica se NÃO existe um agendamento para o colaborador, data e hora específicos
                  return !currentAgendamentos.some(ag => ag.key === key);
              });
         }
         
         const dayCard = document.createElement('div');
         dayCard.className = 'day-card';
-        if (currentDate < todayAtMidnight) { // Past date
+        if (currentDate < todayAtMidnight) { 
             dayCard.style.backgroundColor = '#dddddd';
             dayCard.style.cursor = 'not-allowed';
             dayCard.innerHTML = `${d}`;
@@ -685,7 +651,7 @@ async function showWeek() {
     const weekDates = [];
 
     let currentDate = new Date(today);
-    // Find the next Monday if today is Sat/Sun, or start from today if it's a weekday
+    // Move currentDate forward to the next Monday if it's currently Saturday/Sunday
     if (currentDate.getDay() === 0) { // Sunday
         currentDate.setDate(currentDate.getDate() + 1);
     } else if (currentDate.getDay() === 6) { // Saturday
@@ -693,10 +659,11 @@ async function showWeek() {
     }
 
     for (let i = 0; i < 5; i++) { // Get next 5 weekdays
-        while (currentDate.getDay() === 0 || currentDate.getDay() === 6) { // Skip weekends
+        // Ensure we skip any remaining weekend days if we started on a weekday
+        while (currentDate.getDay() === 0 || currentDate.getDay() === 6) { 
             currentDate.setDate(currentDate.getDate() + 1);
         }
-        const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(current.getDate()).padStart(2, '0')}`;
+        const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
         const dayLabel = currentDate.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
         weekDates.push({ label: `${dayLabel} (${currentDate.getDate()}/${currentDate.getMonth()+1})`, dateStr });
         currentDate.setDate(currentDate.getDate() + 1);
@@ -705,40 +672,38 @@ async function showWeek() {
     const grid = document.createElement('div');
     grid.className = 'week-grid';
 
-    // Carrega agendamentos SEMPRE do Google Sheets aqui
     currentAgendamentos = await DataManager.getAllAgendamentosArray();
 
-    for (const day of weekDates) { // Use for...of para usar await dentro
+    for (const day of weekDates) { 
         const column = document.createElement('div');
         const header = document.createElement('div');
         header.className = 'header-cell';
         header.innerText = day.label;
         column.appendChild(header);
 
-        let availableSlots = false;
+        let hasAvailableSlotsForDay = false; // Variável para controlar se o dia tem qualquer slot disponível
         horarios.forEach(hora => {
             const key = `${selectedCollaborator}_${day.dateStr}_${hora}`;
-            // Verifica se NÃO existe um agendamento para o colaborador, data e hora específicos
             if (!currentAgendamentos.some(ag => ag.key === key)) {
-                availableSlots = true;
+                hasAvailableSlotsForDay = true; // Marca que o dia tem pelo menos um slot
                 const btn = document.createElement('div');
                 btn.className = 'hour';
                 btn.innerText = hora;
                 btn.onclick = () => selectHourAndShowForm(day.dateStr, hora);
                 column.appendChild(btn);
             } else {
-                // Adiciona o horário como "agendado" para que seja visível
                 const btn = document.createElement('div');
-                btn.className = 'hour booked'; // Adiciona classe 'booked'
+                btn.className = 'hour booked'; 
                 btn.innerText = hora;
                 column.appendChild(btn);
             }
         });
 
-        if (!availableSlots && new Date(day.dateStr + 'T00:00:00') >= new Date(new Date().toISOString().split('T')[0] + 'T00:00:00')) {
+        // Só mostra o '🔴' se o dia for hoje ou futuro E não tiver horários disponíveis
+        if (!hasAvailableSlotsForDay && new Date(day.dateStr + 'T00:00:00') >= new Date(new Date().toISOString().split('T')[0] + 'T00:00:00')) {
             const noAvailable = document.createElement('div');
             noAvailable.className = 'no-available';
-            noAvailable.innerHTML = '🔴'; // Simpler indication for week view
+            noAvailable.innerHTML = '🔴'; 
             column.appendChild(noAvailable);
         }
         grid.appendChild(column);
@@ -746,26 +711,25 @@ async function showWeek() {
     weekViewEl.appendChild(grid);
 }
 
-async function openDay(dateStr) { // dateStr format YYYY-MM-DD
+async function openDay(dateStr) { 
     clearScreensAndForm();
     const dayHoursEl = document.getElementById('dayHours');
-    dayHoursEl.innerHTML = ''; // Clear previous content
+    dayHoursEl.innerHTML = ''; 
     dayHoursEl.classList.remove('hidden');
     document.getElementById('backButton').classList.remove('hidden');
 
     const formattedDate = formatDateToBR(dateStr);
     dayHoursEl.innerHTML = `<h2>Horários para ${formattedDate}</h2>`;
     
-    const container = document.createElement('div'); // For flex layout of hours
+    const container = document.createElement('div'); 
     container.className = 'day-hours-container';
 
     const currentDate = new Date(dateStr + 'T00:00:00');
     const todayAtMidnight = new Date(new Date().toISOString().split('T')[0] + 'T00:00:00');
 
-    // Carrega agendamentos SEMPRE do Google Sheets aqui
     currentAgendamentos = await DataManager.getAllAgendamentosArray();
 
-    let available = false;
+    let hasAvailableSlotsForDay = false; // Variável para controlar se o dia tem qualquer slot disponível
     if (currentDate < todayAtMidnight) {
          const pastDateMsg = document.createElement('div');
          pastDateMsg.className = 'no-available';
@@ -774,25 +738,24 @@ async function openDay(dateStr) { // dateStr format YYYY-MM-DD
     } else {
         horarios.forEach(hora => {
             const key = `${selectedCollaborator}_${dateStr}_${hora}`;
-            // Verifica se NÃO existe um agendamento para o colaborador, data e hora específicos
             if (!currentAgendamentos.some(ag => ag.key === key)) {
-                available = true;
+                hasAvailableSlotsForDay = true; // Marca que o dia tem pelo menos um slot
                 const hourBtn = document.createElement('div');
                 hourBtn.className = 'hour';
                 hourBtn.innerText = hora;
                 hourBtn.onclick = () => selectHourAndShowForm(dateStr, hora);
                 container.appendChild(hourBtn);
             } else {
-                // Adiciona o horário como "agendado" para que seja visível
                 const hourBtn = document.createElement('div');
-                hourBtn.className = 'hour booked'; // Adiciona classe 'booked'
+                hourBtn.className = 'hour booked'; 
                 hourBtn.innerText = hora;
                 container.appendChild(hourBtn);
             }
         });
     }
 
-    if (!available && currentDate >= todayAtMidnight) {
+    // Só mostra o '🔴' se o dia for hoje ou futuro E não tiver horários disponíveis
+    if (!hasAvailableSlotsForDay && currentDate >= todayAtMidnight) {
         const noAvailable = document.createElement('div');
         noAvailable.className = 'no-available';
         noAvailable.innerText = '🔴 Sem horários disponíveis para este dia.';
@@ -800,9 +763,8 @@ async function openDay(dateStr) { // dateStr format YYYY-MM-DD
     }
     dayHoursEl.appendChild(container);
 
-    // Back button within openDay is specific to going back to month view
     const backBtnDiv = document.createElement('div');
-    backBtnDiv.className = 'back-button'; // Use existing class for styling
+    backBtnDiv.className = 'back-button'; 
     backBtnDiv.style.marginTop = '20px';
     const specificBackBtn = document.createElement('button');
     specificBackBtn.innerHTML = '⬅ Voltar para o Calendário Mensal';
@@ -812,12 +774,12 @@ async function openDay(dateStr) { // dateStr format YYYY-MM-DD
 }
 
 function selectHourAndShowForm(date, hour) {
-    selectedDate = date; // YYYY-MM-DD
+    selectedDate = date; 
     selectedHour = hour;
     document.getElementById('form').style.display = 'flex';
-    document.getElementById('dayHours').classList.add('hidden'); // Hide day hours
-    document.getElementById('weekView').classList.add('hidden'); // Hide week view
-    document.getElementById('calendar').classList.add('hidden'); // Hide month calendar
+    document.getElementById('dayHours').classList.add('hidden'); 
+    document.getElementById('weekView').classList.add('hidden'); 
+    document.getElementById('calendar').classList.add('hidden'); 
     document.getElementById('nome').focus();
 }
 
@@ -833,13 +795,10 @@ async function book() {
         return;
     }
 
-    // Antes de tentar agendar, verifica se o horário já não foi pego por outra pessoa
-    // Isso é importante porque a interface é atualizada assincronamente.
-    await DataManager.getAllAgendamentosArray(); // Atualiza currentAgendamentos com os dados mais recentes
+    currentAgendamentos = await DataManager.getAllAgendamentosArray(); 
     const keyToCheck = `${selectedCollaborator}_${selectedDate}_${selectedHour}`;
     if (currentAgendamentos.some(ag => ag.key === keyToCheck)) {
         alert('Este horário acabou de ser agendado por outra pessoa. Por favor, escolha outro.');
-        // Recarrega a visualização para mostrar o slot como ocupado
         if (!document.getElementById('weekView').classList.contains('hidden')) {
             await showWeek();
         } else {
@@ -849,23 +808,29 @@ async function book() {
         return;
     }
 
+    // O nome das propriedades aqui DEVE ser o que o SEU doPost do Apps Script espera
+    // p.colaborador, p.nome, p.empreendimento, p.local, p.telefone, p.observacoes, p.dataAgendada, p.horaAgendada
     const agendamentoData = {
-        Colaborador: selectedCollaborator,
-        Data: selectedDate,   // formato YYYY-MM-DD
-        Hora: selectedHour,
-        Responsavel: nome,
-        Empreendimento: empreendimento,
-        Local: local,
-        Telefone: telefone,
-        Observacoes: observacoes,
-        Status: "Agendado" // Exemplo de status
+        colaborador: selectedCollaborator, // Minúscula, pois é assim que o Apps Script espera
+        nome: nome,
+        empreendimento: empreendimento,
+        local: local,
+        telefone: telefone,
+        observacoes: observacoes,
+        dataAgendada: selectedDate,   
+        horaAgendada: selectedHour
     };
 
-    await DataManager.addAgendamento(agendamentoData); // Esta função já atualiza currentAgendamentos
-
-    alert(`Agendado para ${selectedCollaborator} em ${formatDateToBR(selectedDate)} às ${selectedHour} com sucesso!`);
-    clearForm();
-    resetAgendamentoView(); // Go back to collaborator selection
+    const success = await DataManager.addAgendamento(agendamentoData); 
+    
+    if (success) {
+        alert(`Agendado para ${selectedCollaborator} em ${formatDateToBR(selectedDate)} às ${selectedHour} com sucesso!`);
+        clearForm();
+        resetAgendamentoView(); 
+    } else {
+        // A mensagem de erro já é tratada dentro de DataManager.addAgendamento.
+        // Se a lógica 'já agendado' no Apps Script for ativada, a mensagem será exibida.
+    }
 }
 
 function clearForm() {
@@ -880,15 +845,14 @@ function clearForm() {
 
 function cancelForm() {
     clearForm();
-    // Determine where to go back to (day view or week view)
-    if(selectedDate){ // if a date was selected, user was likely in day or week view
+    if(selectedDate){ 
         if (!document.getElementById('weekView').classList.contains('hidden')) {
-            showWeek(); // Go back to week view if it was visible
+            showWeek(); 
         } else {
-            openDay(selectedDate); // Go back to day view
+            openDay(selectedDate); 
         }
     } else {
-       goBack(); // General back function if no date was selected (e.g., from selector)
+       goBack(); 
     }
 }
 
@@ -901,7 +865,7 @@ function clearScreensAndForm() {
 
 // --- Funções de Relatório ---
 async function loadReports() {
-    await applyFilters(); // This will fetch and render
+    await applyFilters(); 
     await updateStats();
 }
 
@@ -911,9 +875,8 @@ async function applyFilters() {
     let dataFimFilter = document.getElementById('filter-data-fim').value;
     const empreendimentoFilter = document.getElementById('filter-empreendimento').value.toLowerCase();
 
-    let dados = await DataManager.getAllAgendamentosArray(); // Sempre busca do Google Sheets
+    let dados = await DataManager.getAllAgendamentosArray(); 
 
-    // Ensure dates are comparable (Date objects at midnight UTC for YYYY-MM-DD)
     dataInicioFilter = dataInicioFilter ? new Date(dataInicioFilter + 'T00:00:00Z') : null;
     dataFimFilter = dataFimFilter ? new Date(dataFimFilter + 'T00:00:00Z') : null;
 
@@ -963,23 +926,22 @@ function renderTable(dados) {
 }
 
 async function updateStats() {
-    const dados = await DataManager.getAllAgendamentosArray(); // Sempre busca do Google Sheets
+    const dados = await DataManager.getAllAgendamentosArray(); 
     const today = new Date();
-    const todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD for comparison
+    const todayStr = today.toISOString().split('T')[0]; 
 
-    // Adjust startOfWeek and endOfWeek to be Monday to Sunday of the CURRENT week
     let startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1)); // Monday
+    startOfWeek.setDate(today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1)); 
     startOfWeek.setHours(0, 0, 0, 0);
 
     let endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday
+    endOfWeek.setDate(startOfWeek.getDate() + 6); 
     endOfWeek.setHours(23, 59, 59, 999);
     
     const totalAgendamentos = dados.length;
     const agendamentosHoje = dados.filter(item => item.data === todayStr).length;
     const agendamentosSemana = dados.filter(item => {
-        const itemDate = new Date(item.data + "T00:00:00"); // Ensure comparison at start of day
+        const itemDate = new Date(item.data + "T00:00:00"); 
         return itemDate >= startOfWeek && itemDate <= endOfWeek;
     }).length;
 
@@ -1003,7 +965,6 @@ async function updateStats() {
             <div class="stat-label">Esta Semana (Seg-Dom)</div>
         </div>
     `;
-    // Add stats for each collaborator dynamically
     Object.entries(agendamentosPorColaborador).forEach(([colaborador, count]) => {
         const statCard = document.createElement('div');
         statCard.className = 'stat-card';
@@ -1014,26 +975,23 @@ async function updateStats() {
         statsContainer.appendChild(statCard);
     });
      if (Object.keys(agendamentosPorColaborador).length === 0 && totalAgendamentos > 0) {
-        // This case should not happen if data is consistent, but as a fallback
         statsContainer.innerHTML += `<div class="stat-card"><div class="stat-label">Nenhum colaborador com agendamentos.</div></div>`;
     }
 }
 
 async function removeAgendamento(key) {
     if (confirm('Tem certeza que deseja excluir este agendamento? Esta ação não pode ser desfeita e requer funcionalidade no Google Apps Script.')) {
-        await DataManager.removeAgendamento(key); // Esta função precisa ser implementada no DataManager e no Apps Script
-        await loadReports(); // Reload reports which also updates stats
-        // alert('Agendamento excluído com sucesso!'); // Descomente se a exclusão for de fato implementada
+        await DataManager.removeAgendamento(key); 
+        await loadReports(); 
     }
 }
 
 async function exportToCSV() {
-    const dados = await DataManager.getAllAgendamentosArray(); // Sempre busca do Google Sheets
+    const dados = await DataManager.getAllAgendamentosArray(); 
     if (dados.length === 0) {
         alert('Não há dados para exportar!');
         return;
     }
-    // User request: Colaborador, Nome, empreendimento e local
     const headers = ['Colaborador', 'Nome Responsável', 'Empreendimento', 'Local', 'Data', 'Horário', 'Telefone', 'Observações'];
     
     const csvContent = [
@@ -1046,7 +1004,7 @@ async function exportToCSV() {
             formatDateToBR(item.data),
             item.horario,
             `"${item.telefone || ''}"`,
-            `"${(item.observacoes || '').replace(/"/g, '""')}"` // Escape double quotes
+            `"${(item.observacoes || '').replace(/"/g, '""')}"` 
         ].join(','))
     ].join('\n');
 
@@ -1059,7 +1017,7 @@ function exportToPDF() {
 
 async function clearAllData() {
     if (confirm('ATENÇÃO: Isto irá solicitar a exclusão de TODOS os agendamentos. Esta é uma operação crítica e requer uma implementação no seu Google Apps Script com devida autenticação e cuidado. Tem certeza?')) {
-        await DataManager.clearAllData(); // Esta função precisa ser implementada no Apps Script
+        await DataManager.clearAllData(); 
         await loadReports();
     }
 }
@@ -1076,19 +1034,18 @@ function downloadFile(content, filename, contentType) {
     URL.revokeObjectURL(url);
 }
 
-function formatDateToBR(dateStr) { // YYYY-MM-DD to DD/MM/YYYY
-    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr; // Return original if invalid
+function formatDateToBR(dateStr) { 
+    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr; 
     const [year, month, day] = dateStr.split('-');
     return `${day}/${month}/${year}`;
 }
 
-function formatDateToISO(dateStr) { // DD/MM/YYYY to YYYY-MM-DD
+function formatDateToISO(dateStr) { 
     if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return dateStr;
     const [day, month, year] = dateStr.split('/');
     return `${year}-${month}-${day}`;
 }
 
-// Inicializar ao carregar a página
 document.addEventListener('DOMContentLoaded', initializeApp);
 
 </script>
