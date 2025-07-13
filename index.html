@@ -8,18 +8,25 @@
         :root {
             --verde-principal: rgb(52, 69, 55);
             --verde-claro: rgb(72, 95, 75);
-            --branco: #f5f5f5;
-            --cinza: #e0e0e0;
-            --vermelho: #e74c3c;
-            --azul: #3498db;
+            --branco: 
+#f5f5f5;
+            --cinza: 
+#e0e0e0;
+            --vermelho: 
+#e74c3c;
+            --azul: 
+#3498db;
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; } /* Added asterisk for global reset */
+
         body {
           background-color: var(--branco);
           font-family: Arial, sans-serif;
           color: var(--verde-principal);
           padding: 20px;
         }
+
         .header {
           display: flex;
           justify-content: space-between;
@@ -28,13 +35,16 @@
           padding: 0 20px;
           flex-wrap: wrap; /* Allow wrapping for smaller screens */
         }
+
         .header h1 {
             margin-bottom: 10px; /* Adjust margin for h1 in header */
         }
+
         .nav-buttons {
           display: flex;
           gap: 10px;
         }
+
         .nav-btn {
           background-color: var(--azul);
           color: white;
@@ -44,19 +54,25 @@
           cursor: pointer;
           transition: background-color 0.3s;
         }
+
         .nav-btn:hover {
-          background-color: #2980b9;
+          background-color: 
+#2980b9;
         }
+
         .nav-btn.active {
           background-color: var(--verde-principal);
         }
+
         h1, h2 { text-align: center; margin-bottom: 20px; }
+
         .card-container {
           display: flex;
           justify-content: center;
           gap: 20px;
           flex-wrap: wrap;
         }
+
         .card {
           background-color: var(--verde-principal);
           color: var(--branco);
@@ -68,9 +84,13 @@
           box-shadow: 0 4px 8px rgba(0,0,0,0.2);
           transition: transform 0.3s;
         }
+
         .card:hover { transform: scale(1.05); }
+
         .hidden { display: none !important; } /* Added !important for stronger override */
+
         .selector, .back-button { margin-top: 20px; text-align: center; }
+
         .selector button, .back-button button {
           background-color: var(--verde-claro);
           color: white;
@@ -80,9 +100,11 @@
           cursor: pointer;
           margin: 5px;
         }
+
         .selector button:hover, .back-button button:hover {
           background-color: var(--verde-principal);
         }
+
         .calendar-grid {
           display: grid;
           grid-template-columns: repeat(7, 1fr);
@@ -90,11 +112,13 @@
           max-width: 700px; /* Limit calendar width */
           margin: 0 auto; /* Center calendar */
         }
+
         .header-cell {
           font-weight: bold;
           text-align: center;
           padding: 10px 0;
         }
+
         .day-card {
           background-color: var(--cinza);
           padding: 15px;
@@ -107,10 +131,12 @@
           align-items: center; /* For centering content */
           justify-content: center; /* For centering content */
         }
+
         .day-card:hover {
           background-color: var(--verde-claro);
           color: white;
         }
+
         .icon-red {
           color: var(--vermelho);
           position: absolute;
@@ -118,12 +144,14 @@
           right: 5px;
           font-size: 18px;
         }
+        
         .day-hours-container { /* Wrapper for day hours for better layout */
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
         }
+
         .hour {
           background-color: var(--cinza);
           padding: 10px;
@@ -133,10 +161,12 @@
           margin: 5px;
           min-width: 80px;
         }
+
         .hour:hover {
           background-color: var(--verde-claro);
           color: white;
         }
+
         .form {
           margin-top: 20px;
           display: none; /* Initially hidden, controlled by JS */
@@ -149,12 +179,14 @@
           padding: 20px;
           border-radius: 12px;
         }
+
         .form input, .form textarea {
           padding: 8px;
           border: 1px solid #ccc;
           border-radius: 6px;
           font-family: inherit;
         }
+
         .form button {
           background-color: var(--verde-principal);
           color: white;
@@ -163,6 +195,7 @@
           border-radius: 8px;
           cursor: pointer;
         }
+
         .form button:hover {
           background-color: var(--verde-claro);
         }
@@ -172,12 +205,15 @@
         .form button[type="button"]:hover {
             background-color: #c0392b;
         }
+
+
         .no-available {
           color: var(--vermelho);
           text-align: center;
           margin-top: 10px;
           font-style: italic;
         }
+
         .week-grid {
           display: grid;
           grid-template-columns: repeat(5, 1fr); /* Mon-Fri */
@@ -187,23 +223,28 @@
           margin-left: auto;
           margin-right: auto;
         }
+
         .week-grid > div { /* Column in week grid */
             background-color: #f9f9f9;
             padding: 10px;
             border-radius: 8px;
             border: 1px solid var(--cinza);
         }
+
+
         /* Estilos para relatórios */
         .report-container {
           max-width: 1200px;
           margin: 0 auto;
         }
+
         .filter-section {
           background-color: var(--cinza);
           padding: 20px;
           border-radius: 12px;
           margin-bottom: 20px;
         }
+
         .filter-row {
           display: flex;
           gap: 15px;
@@ -211,27 +252,32 @@
           flex-wrap: wrap;
           align-items: end;
         }
+
         .filter-group {
           display: flex;
           flex-direction: column;
           gap: 5px;
         }
+
         .filter-group label {
           font-weight: bold;
           font-size: 14px;
         }
+
         .filter-group input, .filter-group select {
           padding: 8px;
           border: 1px solid #ccc;
           border-radius: 6px;
           min-width: 150px;
         }
+
         .export-buttons {
           display: flex;
           gap: 10px;
           justify-content: center;
           margin: 20px 0;
         }
+
         .export-btn {
           background-color: var(--azul);
           color: white;
@@ -240,27 +286,30 @@
           border-radius: 8px;
           cursor: pointer;
         }
+
         .export-btn:hover {
-          background-color: #2980b9;
+          background-color: 
+#2980b9;
         }
-        .export-btn[style*="background-color: var(--vermelho);"]:hover {
-            background-color: #c0392b !important;
-        }
+
         .table-container {
           overflow-x: auto;
           background-color: white;
           border-radius: 12px;
           box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
+
         table {
           width: 100%;
           border-collapse: collapse;
         }
+
         th, td {
           padding: 12px;
           text-align: left;
           border-bottom: 1px solid #ddd;
         }
+
         th {
           background-color: var(--verde-principal);
           color: white;
@@ -268,19 +317,26 @@
           position: sticky; /* Make table headers sticky */
           top: 0;
         }
+
         tr:hover {
-          background-color: #f8f9fa;
+          background-color: 
+#f8f9fa;
         }
+
         .status-badge {
           padding: 4px 8px;
           border-radius: 4px;
           font-size: 12px;
           font-weight: bold;
         }
+
         .status-agendado {
-          background-color: #e8f5e8;
-          color: #2d5016;
+          background-color: 
+#e8f5e8;
+          color: 
+#2d5016;
         }
+
         .action-btn {
           background-color: var(--vermelho);
           color: white;
@@ -290,15 +346,19 @@
           cursor: pointer;
           font-size: 12px;
         }
+
         .action-btn:hover {
-          background-color: #c0392b;
+          background-color: 
+#c0392b;
         }
+
         .stats-container {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           gap: 20px;
           margin-bottom: 30px;
         }
+
         .stat-card {
           background-color: white;
           padding: 20px;
@@ -306,11 +366,13 @@
           text-align: center;
           box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
+
         .stat-number {
           font-size: 2em;
           font-weight: bold;
           color: var(--verde-principal);
         }
+
         .stat-label {
           color: #666;
           margin-top: 5px;
@@ -325,25 +387,38 @@
             <button class="nav-btn" id="btn-relatorios" onclick="showSection('relatorios')">Relatórios</button>
         </div>
     </div>
+
+    <!-- Seção de Agendamento -->
     <div id="section-agendamento">
         <div class="card-container" id="collaborators">
+            <!-- Colaboradores serão carregados aqui se necessário, ou estáticos como abaixo -->
             <div class="card" onclick="selectCollaborator('Cleber')">Cleber</div>
             <div class="card" onclick="selectCollaborator('Devilson')">Devilson</div>
-            </div>
+            <!-- Adicionar mais colaboradores aqui se necessário -->
+        </div>
+
         <div class="selector hidden" id="selector">
             <h2 id="selectedCollaborator"></h2>
             <button onclick="showWeek()">Semana</button>
             <button onclick="showMonth()">Mês</button>
         </div>
+
         <div class="back-button hidden" id="backButton">
             <button onclick="goBack()">⬅ Voltar</button>
         </div>
+
         <div class="calendar hidden" id="calendar">
-            </div>
+            <!-- Calendário Mês será gerado aqui -->
+        </div>
+
         <div class="day-hours hidden" id="dayHours">
-             </div>
+             <!-- Horários do Dia serão gerados aqui -->
+        </div>
+        
         <div class="week-view hidden" id="weekView">
-            </div>
+            <!-- Visualização Semanal será gerada aqui -->
+        </div>
+
         <div class="form" id="form">
             <h3>Detalhes do Agendamento</h3>
             <input type="text" id="nome" placeholder="Nome do responsável *" required>
@@ -355,6 +430,8 @@
             <button type="button" onclick="cancelForm()">Cancelar</button>
         </div>
     </div>
+
+    <!-- Seção de Relatórios -->
     <div id="section-relatorios" class="hidden">
         <div class="report-container">
             <div class="filter-section">
@@ -366,7 +443,8 @@
                             <option value="">Todos</option>
                             <option value="Cleber">Cleber</option>
                             <option value="Devilson">Devilson</option>
-                            </select>
+                            <!-- Adicionar mais colaboradores aqui se necessário -->
+                        </select>
                     </div>
                     <div class="filter-group">
                         <label for="filter-data-inicio">Data Inicial:</label>
@@ -381,18 +459,22 @@
                         <input type="text" id="filter-empreendimento" placeholder="Filtrar por empreendimento">
                     </div>
                     <div class="filter-group">
-                        <label>&nbsp;</label>
+                        <label> </label>
                         <button class="nav-btn" onclick="applyFilters()">Filtrar</button>
                     </div>
                 </div>
             </div>
+
             <div class="stats-container" id="stats-container">
-                </div>
+                <!-- Estatísticas serão inseridas aqui -->
+            </div>
+
             <div class="export-buttons">
                 <button class="export-btn" onclick="exportToCSV()">Exportar CSV</button>
                 <button class="export-btn" onclick="exportToPDF()">Exportar PDF</button>
                 <button class="export-btn" style="background-color: var(--vermelho);" onclick="clearAllData()">Limpar Todos os Dados</button>
             </div>
+
             <div class="table-container">
                 <table id="reports-table">
                     <thead>
@@ -409,11 +491,13 @@
                         </tr>
                     </thead>
                     <tbody id="reports-tbody">
-                        </tbody>
+                        <!-- Dados serão inseridos aqui -->
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+
 <script>
 const horarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
 let currentAgendamentos = {}; // Local cache of agendamentos
@@ -421,108 +505,64 @@ let selectedCollaborator = '';
 let selectedDate = ''; // Format: YYYY-MM-DD
 let selectedHour = '';
 
-// --- DataManager usando Google Sheets ---
-// URL do seu Google Apps Script publicado como Web App
-// ATENÇÃO: SUBSTITUA ESTE URL PELO SEU WEB APP PUBLICADO
-const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec';
+const STORAGE_KEY = 'vistoriasAgendamentos';
 
+// --- DataManager START ---
+// Simulates an API or a more complex data storage mechanism.
+// For GitHub Pages without a backend, localStorage is the simplest persistent option (per browser).
+// To make this a truly shared database, you'd replace localStorage calls with API calls (fetch)
+// to a backend service (e.g., Firebase, Supabase, custom API).
 class DataManager {
     static async getAgendamentos() {
-        try {
-            const res = await fetch(GOOGLE_SHEET_API_URL);
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            const data = await res.json();
-            return data.data || []; // A API do Apps Script geralmente retorna um objeto com uma chave 'data'
-        } catch (error) {
-            console.error('Erro ao buscar agendamentos:', error);
-            alert('Erro ao carregar agendamentos. Verifique a URL do Google Apps Script ou as permissões.');
-            return [];
-        }
+        // Simulate network delay for API call
+        // await new Promise(resolve => setTimeout(resolve, 100));
+        const data = localStorage.getItem(STORAGE_KEY);
+        return data ? JSON.parse(data) : {};
     }
 
-    static async addAgendamento(data) {
-        try {
-            // Removido mode: 'no-cors' para permitir o envio de 'Content-Type'
-            // O Google Apps Script Web App geralmente lida com CORS.
-            const res = await fetch(GOOGLE_SHEET_API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            // Opcional: Checar a resposta do Apps Script se ele retornar algo (e.g., sucesso)
-            // const result = await res.json();
-            // console.log('Agendamento adicionado:', result);
+    static async saveAgendamentos(agendamentos) {
+        // Simulate network delay
+        // await new Promise(resolve => setTimeout(resolve, 100));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(agendamentos));
+        currentAgendamentos = agendamentos; // Update local cache
+    }
 
-            // Após adicionar, recarrega os agendamentos para manter o cache atualizado
-            currentAgendamentos = await this.getAgendamentos();
-
-        } catch (err) {
-            console.error('Erro ao enviar agendamento para Google Sheets:', err);
-            alert('Falha ao agendar. Verifique a conexão ou o Google Apps Script.');
-        }
+    static async addAgendamento(key, data) {
+        const agendamentos = await this.getAgendamentos();
+        agendamentos[key] = {
+            ...data,
+            dataAgendamentoISO: new Date().toISOString() // Timestamp of when it was booked
+        };
+        await this.saveAgendamentos(agendamentos);
     }
 
     static async removeAgendamento(key) {
-        // Para uma implementação real, esta função precisaria enviar uma requisição
-        // ao seu Google Apps Script para remover a linha correspondente ao 'key'.
-        // Exemplo:
-        /*
-        try {
-            const res = await fetch(GOOGLE_SHEET_API_URL, {
-                method: 'POST', // Ou DELETE se seu Apps Script estiver configurado
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'delete', key: key })
-            });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            const result = await res.json();
-            console.log('Agendamento removido:', result);
-            currentAgendamentos = await this.getAgendamentos(); // Atualiza cache
-        } catch (err) {
-            console.error('Erro ao remover agendamento:', err);
-            alert('Falha ao remover agendamento. Verifique o Google Apps Script.');
-        }
-        */
-        alert('A remoção de agendamentos ainda não está implementada na planilha. Por favor, remova manualmente se necessário.');
+        const agendamentos = await this.getAgendamentos();
+        delete agendamentos[key];
+        await this.saveAgendamentos(agendamentos);
     }
 
     static async getAllAgendamentosArray() {
-        const dados = await this.getAgendamentos();
-        return dados
-            .map(item => ({
-                // O Google Apps Script geralmente retorna strings, ajuste os nomes das chaves para corresponder.
-                // Adapte conforme os cabeçalhos da sua planilha (ex: 'Colaborador', 'Data', 'Hora')
-                key: `${item.Colaborador}_${item.Data}_${item.Hora}`, // Cria uma chave única para identificação
-                colaborador: item.Colaborador,
-                data: item.Data, // Assumindo formato YYYY-MM-DD vindo da planilha
-                horario: item.Hora, // Assumindo formato HH:MM vindo da planilha
-                nome: item.Responsavel, // Ajuste para o nome da coluna na sua planilha
-                empreendimento: item.Empreendimento,
-                local: item.Local,
-                telefone: item.Telefone,
-                observacoes: item.Observacoes
-            }))
-            .sort((a, b) => {
-                const dateA = new Date(`${a.data}T${a.horario}`);
-                const dateB = new Date(`${b.data}T${b.horario}`);
-                return dateA - dateB;
+        const agendamentos = await this.getAgendamentos();
+        const result = [];
+        for (const [key, data] of Object.entries(agendamentos)) {
+            const [colaborador, date_str, horario] = key.split('_'); // Use underscore as separator
+            result.push({
+                key,
+                colaborador,
+                data: date_str, // YYYY-MM-DD
+                horario,
+                ...data
             });
-    }
-
-    static async saveAgendamentos(_) {
-        // Não aplicável com planilha remota. A adição é feita via addAgendamento.
-        // Para "limpar todos os dados", seria necessário implementar no Apps Script
-        // uma função para deletar todas as linhas da planilha.
-        alert('Limpar todos os dados é uma operação crítica e requer uma funcionalidade específica no Google Apps Script.');
+        }
+        // Sort by date, then by time
+        return result.sort((a, b) => {
+            const dateA = new Date(`${a.data}T${a.horario}`);
+            const dateB = new Date(`${b.data}T${b.horario}`);
+            return dateA - dateB;
+        });
     }
 }
-
 // --- DataManager END ---
 
 async function initializeApp() {
@@ -533,6 +573,7 @@ async function initializeApp() {
     const dataFimFilter = document.getElementById('filter-data-fim');
     if (!dataInicioFilter.value) dataInicioFilter.value = today;
     if (!dataFimFilter.value) dataFimFilter.value = today;
+    
     showSection('agendamento'); // Default section
 }
 
@@ -581,7 +622,15 @@ function goBack() { // Main back button logic
     const selector = document.getElementById('selector');
 
     if (form.style.display === 'flex') { // If form is visible, go back to day/week view
-        cancelForm(); // This will handle going back to the correct view
+        cancelForm();
+        if (selectedDate && selectedHour) { // implies we came from day view or week view
+             // Re-show the previous view (day or week)
+            if (document.getElementById('calendar').classList.contains('hidden')) { // came from week
+                showWeek();
+            } else { // came from month > day
+                openDay(selectedDate);
+            }
+        }
     } else if (!dayHours.classList.contains('hidden')) { // If dayHours is visible, go back to month calendar
         showMonth();
     } else if (!calendar.classList.contains('hidden') || !weekView.classList.contains('hidden')) { // If calendar or weekView is visible, go to selector
@@ -593,7 +642,8 @@ function goBack() { // Main back button logic
     }
 }
 
-async function showMonth() {
+
+function showMonth() {
     clearScreensAndForm();
     const calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = '';
@@ -603,8 +653,8 @@ async function showMonth() {
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth(); // 0-indexed
-    const monthName = today.toLocaleString('pt-BR', { month: 'long' });
 
+    const monthName = today.toLocaleString('pt-BR', { month: 'long' });
     calendarEl.innerHTML = `<h2>${monthName.charAt(0).toUpperCase() + monthName.slice(1)} / ${year}</h2>`;
 
     const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 (Sun) - 6 (Sat)
@@ -620,25 +670,16 @@ async function showMonth() {
         grid.innerHTML += `<div></div>`; // Empty cells for days before month starts
     }
 
-    const allAgendamentos = await DataManager.getAllAgendamentosArray(); // Busca todos os agendamentos uma vez
-
     for (let d = 1; d <= daysInMonth; d++) {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const currentDate = new Date(dateStr + 'T00:00:00'); // Para comparação de data, evite problemas de fuso horário
-        const todayAtMidnight = new Date(new Date().toISOString().split('T')[0] + 'T00:00:00');
-
         let hasAvailable = false;
-        if (currentDate >= todayAtMidnight) { // Only check availability for today or future
-             hasAvailable = horarios.some(h => {
-                 const key = `${selectedCollaborator}_${dateStr}_${h}`;
-                 return !allAgendamentos.find(a => a.key === key);
-             });
+        if (new Date(dateStr) >= new Date(new Date().toDateString())) { // Only check availability for today or future
+             hasAvailable = horarios.some(h => !currentAgendamentos[`${selectedCollaborator}_${dateStr}_${h}`]);
         }
-
+       
         const dayCard = document.createElement('div');
         dayCard.className = 'day-card';
-
-        if (currentDate < todayAtMidnight) { // Past date
+        if (new Date(dateStr) < new Date(new Date().toDateString())) { // Past date
             dayCard.style.backgroundColor = '#dddddd';
             dayCard.style.cursor = 'not-allowed';
             dayCard.innerHTML = `${d}`;
@@ -651,7 +692,7 @@ async function showMonth() {
     calendarEl.appendChild(grid);
 }
 
-async function showWeek() {
+function showWeek() {
     clearScreensAndForm();
     const weekViewEl = document.getElementById('weekView');
     weekViewEl.innerHTML = '<h2>Próximos 5 Dias Úteis</h2>';
@@ -659,9 +700,10 @@ async function showWeek() {
     document.getElementById('backButton').classList.remove('hidden');
 
     const today = new Date();
+    const weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']; // Assuming Mon-Fri work week
     const weekDates = [];
-    let currentDate = new Date(today);
 
+    let currentDate = new Date(today);
     // Find the next Monday if today is Sat/Sun, or start from today if it's a weekday
     if (currentDate.getDay() === 0) { // Sunday
         currentDate.setDate(currentDate.getDate() + 1);
@@ -670,6 +712,9 @@ async function showWeek() {
     }
 
     for (let i = 0; i < 5; i++) { // Get next 5 weekdays
+        if (i > 0 || (currentDate.getDay() !== 0 && currentDate.getDay() !== 6)) {
+             // Skip adding if it's a weekend, unless it's the very first day we are forced to start on.
+        }
         while (currentDate.getDay() === 0 || currentDate.getDay() === 6) { // Skip weekends
             currentDate.setDate(currentDate.getDate() + 1);
         }
@@ -682,8 +727,6 @@ async function showWeek() {
     const grid = document.createElement('div');
     grid.className = 'week-grid';
 
-    const allAgendamentos = await DataManager.getAllAgendamentosArray(); // Busca todos os agendamentos uma vez
-
     weekDates.forEach(day => {
         const column = document.createElement('div');
         const header = document.createElement('div');
@@ -694,7 +737,7 @@ async function showWeek() {
         let availableSlots = false;
         horarios.forEach(hora => {
             const key = `${selectedCollaborator}_${day.dateStr}_${hora}`;
-            if (!allAgendamentos.find(a => a.key === key)) {
+            if (!currentAgendamentos[key]) {
                 availableSlots = true;
                 const btn = document.createElement('div');
                 btn.className = 'hour';
@@ -715,7 +758,8 @@ async function showWeek() {
     weekViewEl.appendChild(grid);
 }
 
-async function openDay(dateStr) { // dateStr format YYYY-MM-DD
+
+function openDay(dateStr) { // dateStr format YYYY-MM-DD
     clearScreensAndForm();
     const dayHoursEl = document.getElementById('dayHours');
     dayHoursEl.innerHTML = ''; // Clear previous content
@@ -724,24 +768,20 @@ async function openDay(dateStr) { // dateStr format YYYY-MM-DD
 
     const formattedDate = formatDateToBR(dateStr);
     dayHoursEl.innerHTML = `<h2>Horários para ${formattedDate}</h2>`;
-
+    
     const container = document.createElement('div'); // For flex layout of hours
     container.className = 'day-hours-container';
 
-    const currentDate = new Date(dateStr + 'T00:00:00');
-    const todayAtMidnight = new Date(new Date().toISOString().split('T')[0] + 'T00:00:00');
-
     let available = false;
-    if (currentDate < todayAtMidnight) {
+    if (new Date(dateStr) < new Date(new Date().toDateString())) {
          const pastDateMsg = document.createElement('div');
          pastDateMsg.className = 'no-available';
          pastDateMsg.innerText = 'Não é possível agendar em datas passadas.';
          container.appendChild(pastDateMsg);
     } else {
-        const allAgendamentos = await DataManager.getAllAgendamentosArray(); // Busca todos os agendamentos uma vez
         horarios.forEach(hora => {
             const key = `${selectedCollaborator}_${dateStr}_${hora}`;
-            if (!allAgendamentos.find(a => a.key === key)) {
+            if (!currentAgendamentos[key]) {
                 available = true;
                 const hourBtn = document.createElement('div');
                 hourBtn.className = 'hour';
@@ -752,7 +792,8 @@ async function openDay(dateStr) { // dateStr format YYYY-MM-DD
         });
     }
 
-    if (!available && currentDate >= todayAtMidnight) {
+
+    if (!available && new Date(dateStr) >= new Date(new Date().toDateString())) {
         const noAvailable = document.createElement('div');
         noAvailable.className = 'no-available';
         noAvailable.innerText = '🔴 Sem horários disponíveis para este dia.';
@@ -770,6 +811,7 @@ async function openDay(dateStr) { // dateStr format YYYY-MM-DD
     backBtnDiv.appendChild(specificBackBtn);
     dayHoursEl.appendChild(backBtnDiv);
 }
+
 
 function selectHourAndShowForm(date, hour) {
     selectedDate = date; // YYYY-MM-DD
@@ -793,19 +835,42 @@ async function book() {
         return;
     }
 
-    const agendamentoData = {
-        Colaborador: selectedCollaborator,
-        Data: selectedDate,   // formato YYYY-MM-DD
-        Hora: selectedHour,
-        Responsavel: nome,
-        Empreendimento: empreendimento,
-        Local: local,
-        Telefone: telefone,
-        Observacoes: observacoes,
-        Status: "Agendado" // Exemplo de status
-    };
+    const key = `${selectedCollaborator}_${selectedDate}_${selectedHour}`;
+    await DataManager.addAgendamento(key, {
+        nome,
+        empreendimento,
+        local,
+        telefone,
+        observacoes,
+        status: "Agendado" // Example status
+    });
+    /* ------------- ENVIA PARA GOOGLE SHEETS ------------- */
+    try {
+        await fetch(
+            'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
+            {
+                method: 'POST',
+                mode:'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome,
+                    empreendimento,
+                    local,
+                    telefone,
+                    observacoes,
+                    colaborador: selectedCollaborator,
+                    dataAgendada: selectedDate,   // formato YYYY-MM-DD
+                    horaAgendada: selectedHour
+                })
+            }
+        );
+    } catch (err) {
+        console.error('Falha ao enviar para a planilha:', err);
+    }
+    /* ---------------------------------------------------- */
 
-    await DataManager.addAgendamento(agendamentoData);
 
     alert(`Agendado para ${selectedCollaborator} em ${formatDateToBR(selectedDate)} às ${selectedHour} com sucesso!`);
     clearForm();
@@ -815,26 +880,38 @@ async function book() {
 function clearForm() {
     const form = document.getElementById('form');
     form.style.display = 'none';
-    document.getElementById('nome').value = '';
-    document.getElementById('empreendimento').value = '';
-    document.getElementById('local').value = '';
-    document.getElementById('telefone').value = '';
-    document.getElementById('observacoes').value = '';
+    form.reset_ = () => { // Add a reset method for convenience
+        document.getElementById('nome').value = '';
+        document.getElementById('empreendimento').value = '';
+        document.getElementById('local').value = '';
+        document.getElementById('telefone').value = '';
+        document.getElementById('observacoes').value = '';
+    }
+    form.reset_();
 }
+
 
 function cancelForm() {
     clearForm();
     // Determine where to go back to (day view or week view)
+    // This is simplified; ideally, track the previous state.
+    // For now, just go back to the selector view or a sensible default.
     if(selectedDate){ // if a date was selected, user was likely in day or week view
-        if (!document.getElementById('weekView').classList.contains('hidden')) {
-            showWeek(); // Go back to week view if it was visible
+        // Heuristics: if calendar is hidden and weekview is hidden, but dayhours was likely shown
+        // This logic could be improved by storing the previous view explicitly
+        if(document.getElementById('calendar').classList.contains('hidden') && 
+           document.getElementById('weekView').classList.contains('hidden')) {
+            openDay(selectedDate); // Try to go back to day view
+        } else if (!document.getElementById('weekView').classList.contains('hidden')) {
+            showWeek();
         } else {
-            openDay(selectedDate); // Go back to day view
+            showMonth(); // Default fallback if month view was visible
         }
     } else {
-       goBack(); // General back function if no date was selected (e.g., from selector)
+       goBack(); // General back function
     }
 }
+
 
 function clearScreensAndForm() {
     document.getElementById('calendar').classList.add('hidden');
@@ -861,6 +938,7 @@ async function applyFilters() {
     dataInicioFilter = dataInicioFilter ? new Date(dataInicioFilter + 'T00:00:00Z') : null;
     dataFimFilter = dataFimFilter ? new Date(dataFimFilter + 'T00:00:00Z') : null;
 
+
     if (colaboradorFilter) {
         dados = dados.filter(item => item.colaborador === colaboradorFilter);
     }
@@ -876,15 +954,14 @@ async function applyFilters() {
     renderTable(dados);
 }
 
+
 function renderTable(dados) {
     const tbody = document.getElementById('reports-tbody');
     tbody.innerHTML = '';
-
     if (dados.length === 0) {
         tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: #666;">Nenhum agendamento encontrado para os filtros aplicados.</td></tr>';
         return;
     }
-
     dados.forEach(item => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -919,7 +996,7 @@ async function updateStats() {
     let endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday
     endOfWeek.setHours(23, 59, 59, 999);
-
+    
     const totalAgendamentos = dados.length;
     const agendamentosHoje = dados.filter(item => item.data === todayStr).length;
     const agendamentosSemana = dados.filter(item => {
@@ -947,7 +1024,6 @@ async function updateStats() {
             <div class="stat-label">Esta Semana (Seg-Dom)</div>
         </div>
     `;
-
     // Add stats for each collaborator dynamically
     Object.entries(agendamentosPorColaborador).forEach(([colaborador, count]) => {
         const statCard = document.createElement('div');
@@ -958,18 +1034,18 @@ async function updateStats() {
         `;
         statsContainer.appendChild(statCard);
     });
-
      if (Object.keys(agendamentosPorColaborador).length === 0 && totalAgendamentos > 0) {
         // This case should not happen if data is consistent, but as a fallback
         statsContainer.innerHTML += `<div class="stat-card"><div class="stat-label">Nenhum colaborador com agendamentos.</div></div>`;
     }
 }
 
+
 async function removeAgendamento(key) {
-    if (confirm('Tem certeza que deseja excluir este agendamento? Esta ação não pode ser desfeita.')) {
-        await DataManager.removeAgendamento(key); // Esta função precisa ser implementada no DataManager e no Apps Script
+    if (confirm('Tem certeza que deseja excluir este agendamento?')) {
+        await DataManager.removeAgendamento(key);
         await loadReports(); // Reload reports which also updates stats
-        // alert('Agendamento excluído com sucesso!'); // Descomente se a exclusão for de fato implementada
+        alert('Agendamento excluído com sucesso!');
     }
 }
 
@@ -979,9 +1055,9 @@ async function exportToCSV() {
         alert('Não há dados para exportar!');
         return;
     }
-
     // User request: Colaborador, Nome, empreendimento e local
     const headers = ['Colaborador', 'Nome Responsável', 'Empreendimento', 'Local', 'Data', 'Horário', 'Telefone', 'Observações'];
+    
     const csvContent = [
         headers.join(','),
         ...dados.map(item => [
@@ -1001,15 +1077,20 @@ async function exportToCSV() {
 
 function exportToPDF() {
     alert('Funcionalidade de exportação para PDF ainda não implementada. Considere usar a impressão do navegador (Ctrl+P) e "Salvar como PDF" ou uma biblioteca como jsPDF para uma solução mais robusta.');
+    // Para uma implementação real, você usaria uma biblioteca como jsPDF:
+    // const { jsPDF } = window.jspdf; (depois de incluir a lib)
+    // const doc = new jsPDF();
+    // doc.text("Relatório de Agendamentos", 10, 10);
+    // // ... adicionar dados da tabela ...
+    // doc.save("agendamentos.pdf");
 }
 
 async function clearAllData() {
-    if (confirm('ATENÇÃO: Isto irá solicitar a exclusão de TODOS os agendamentos. Esta é uma operação crítica e requer uma implementação no seu Google Apps Script. Tem certeza?')) {
-        // Para limpar todos os dados, você precisaria de uma função no seu Google Apps Script
-        // que esvaziaria a planilha ou deletaria todas as linhas, e então chamá-la aqui.
-        // Exemplo: await fetch(GOOGLE_SHEET_API_URL, { method: 'POST', body: JSON.stringify({ action: 'clearAll' }) });
-        alert('A funcionalidade de "Limpar Todos os Dados" é uma operação de alto risco e não está implementada no frontend. É necessário desenvolvê-la no Google Apps Script com devida autenticação e cuidado.');
-        await loadReports(); // Recarrega para mostrar que nada foi alterado
+    if (confirm('ATENÇÃO: Isto irá excluir TODOS os agendamentos armazenados no seu navegador. Tem certeza?')) {
+        await DataManager.saveAgendamentos({});
+        currentAgendamentos = {}; // Clear local cache
+        await loadReports();
+        alert('Todos os dados foram excluídos!');
     }
 }
 
@@ -1037,8 +1118,10 @@ function formatDateToISO(dateStr) { // DD/MM/YYYY to YYYY-MM-DD
     return `${year}-${month}-${day}`;
 }
 
+
 // Inicializar ao carregar a página
 document.addEventListener('DOMContentLoaded', initializeApp);
+
 </script>
 </body>
 </html>
