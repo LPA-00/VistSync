@@ -498,7 +498,7 @@ const STORAGE_KEY = 'vistoriasAgendamentos'; // Mantido por compatibilidade, mas
 class DataManager {
     static async getAgendamentos() {
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbxo5mpxmBjBsksYPY7iaHLe-DOC6XAeRuzOQ6Npo-sRdzHLG6DHP_4G-TpAxVW-wIBtzw/exec');
+            const response = await fetch('https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec');
             const agendamentosArray = await response.json();
 
             const agendamentos = {};
