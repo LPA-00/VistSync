@@ -500,12 +500,18 @@
 
 <script>
 const horarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+let currentAgendamentos = {}; // Local cache of agendamentos
 let selectedCollaborator = '';
 let selectedDate = ''; // Format: YYYY-MM-DD
 let selectedHour = '';
 
 const STORAGE_KEY = 'vistoriasAgendamentos';
 
+// --- DataManager START ---
+// Simulates an API or a more complex data storage mechanism.
+// For GitHub Pages without a backend, localStorage is the simplest persistent option (per browser).
+// To make this a truly shared database, you'd replace localStorage calls with API calls (fetch)
+// to a backend service (e.g., Firebase, Supabase, custom API).
 // --- DataManager usando Google Sheets ---
 // URL do seu Google Apps Script publicado como Web App
 const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec';
@@ -568,7 +574,10 @@ class DataManager {
     }
 }
 
+// --- DataManager END ---
+
 async function initializeApp() {
+    currentAgendamentos = await DataManager.getAgendamentos();
     // Set default dates for filters
     const today = new Date().toISOString().split('T')[0];
     const dataInicioFilter = document.getElementById('filter-data-inicio');
@@ -645,7 +654,7 @@ function goBack() { // Main back button logic
 }
 
 
-function showMonth() {
+async function showMonth() {
     clearScreensAndForm();
     const calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = '';
@@ -676,8 +685,8 @@ function showMonth() {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         let hasAvailable = false;
         if (new Date(dateStr) >= new Date(new Date().toDateString())) { // Only check availability for today or future
-             const allAg = await DataManager.getAllAgendamentosArray();
-            hasAvailable = horarios.some(h => !allAg.some(a => a.key === `${selectedCollaborator}_${dateStr}_${h}`));
+             const allAgendamentos = await DataManager.getAllAgendamentosArray();
+			 hasAvailable = horarios.some(h => !allAgendamentos.find(a => a.key === `${selectedCollaborator}_${dateStr}_${h}`));
         }
        
         const dayCard = document.createElement('div');
@@ -695,7 +704,7 @@ function showMonth() {
     calendarEl.appendChild(grid);
 }
 
-function showWeek() {
+async function showWeek() {
     clearScreensAndForm();
     const weekViewEl = document.getElementById('weekView');
     weekViewEl.innerHTML = '<h2>Próximos 5 Dias Úteis</h2>';
@@ -739,9 +748,10 @@ function showWeek() {
 
         let availableSlots = false;
         horarios.forEach(hora => {
-            const allAg = await DataManager.getAllAgendamentosArray();
-            const key = `${selectedCollaborator}_${day.dateStr}_${hora}`;
-            if (!allAg.some(a => a.key === key)) {
+            const allAgendamentos = await DataManager.getAllAgendamentosArray();
+			horarios.forEach(hora => {
+				const key = `${selectedCollaborator}_${day.dateStr}_${hora}`;
+				if (!allAgendamentos.find(a => a.key === key)) {
                 availableSlots = true;
                 const btn = document.createElement('div');
                 btn.className = 'hour';
@@ -763,7 +773,7 @@ function showWeek() {
 }
 
 
-function openDay(dateStr) { // dateStr format YYYY-MM-DD
+async function openDay(dateStr) { // dateStr format YYYY-MM-DD
     clearScreensAndForm();
     const dayHoursEl = document.getElementById('dayHours');
     dayHoursEl.innerHTML = ''; // Clear previous content
@@ -784,9 +794,11 @@ function openDay(dateStr) { // dateStr format YYYY-MM-DD
          container.appendChild(pastDateMsg);
     } else {
         horarios.forEach(hora => {
-            const allAg = await DataManager.getAllAgendamentosArray();
             const key = `${selectedCollaborator}_${dateStr}_${hora}`;
-            if (!allAg.some(a => a.key === key)) {
+            const allAgendamentos = await DataManager.getAllAgendamentosArray();
+			horarios.forEach(hora => {
+			const key = `${selectedCollaborator}_${dateStr}_${hora}`;
+			if (!allAgendamentos.find(a => a.key === key)) {
                 available = true;
                 const hourBtn = document.createElement('div');
                 hourBtn.className = 'hour';
