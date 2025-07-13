@@ -414,7 +414,7 @@
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody id="reports-tbody">
+                    <tbody>
                         </tbody>
                 </table>
             </div>
@@ -437,12 +437,11 @@ class DataManager {
         try {
             const res = await fetch(GOOGLE_SHEET_API_URL);
             if (!res.ok) {
-                // Tenta ler a resposta de erro para obter mais detalhes
                 const errorText = await res.text();
                 console.error('Erro na resposta do fetch:', res.status, errorText);
                 throw new Error(`HTTP error! status: ${res.status} - ${errorText}`);
             }
-            // Seu Apps Script está retornando o array direto, não um objeto com a chave 'data'
+            // CORREÇÃO CRÍTICA AQUI: Usar 'data' diretamente, pois o Apps Script retorna o array puro.
             const data = await res.json();
             return data || []; 
         } catch (error) {
@@ -462,14 +461,12 @@ class DataManager {
                 body: JSON.stringify(dataToSend) 
             });
             if (!res.ok) {
-                // Tenta ler a resposta de erro para obter mais detalhes
                 const errorData = await res.json().catch(() => ({ message: res.statusText }));
                 throw new Error(`HTTP error! Status: ${res.status}, Message: ${errorData.message || 'Unknown error'}`);
             }
-            // Verifica a resposta do Apps Script para ver se o agendamento foi recusado (já existe)
             const responseBody = await res.json();
             if (responseBody.success === false && responseBody.message) {
-                 throw new Error(responseBody.message); // Lança a mensagem do Apps Script como erro
+                 throw new Error(responseBody.message); 
             }
 
             currentAgendamentos = await this.getAllAgendamentosArray(); 
@@ -487,11 +484,9 @@ class DataManager {
 
     static async getAllAgendamentosArray() {
         const dados = await this.getAgendamentos();
-        // Mapeia os dados do Apps Script para a estrutura esperada no frontend
-        // Conforme seu Apps Script: { colaborador: row[0], data: row[6], hora: row[7], nome: row[1], empreendimento: row[2], local: row[3], telefone: row[4], observacoes: row[5] }
         return dados
             .map(item => ({
-                // Usa as chaves em minúsculas que vêm do seu Apps Script
+                // As chaves são em minúsculas, conforme seu Apps Script
                 key: `${item.colaborador}_${item.data}_${item.hora}`, 
                 colaborador: item.colaborador,
                 data: item.data, 
@@ -513,7 +508,6 @@ class DataManager {
         alert('Limpar todos os dados é uma operação crítica e DEVE ser implementada no Google Apps Script com devida segurança, não diretamente no frontend.');
     }
 }
-// --- DataManager END ---
 
 async function initializeApp() {
     currentAgendamentos = await DataManager.getAllAgendamentosArray(); 
@@ -522,7 +516,7 @@ async function initializeApp() {
     const dataFimFilter = document.getElementById('filter-data-fim');
     if (!dataInicioFilter.value) dataInicioFilter.value = today;
     if (!dataFimFilter.value) dataFimFilter.value = today;
-    
+
     showSection('agendamento'); 
 }
 
@@ -624,7 +618,7 @@ async function showMonth() {
                  return !currentAgendamentos.some(ag => ag.key === key);
              });
         }
-        
+
         const dayCard = document.createElement('div');
         dayCard.className = 'day-card';
         if (currentDate < todayAtMidnight) { 
@@ -658,7 +652,7 @@ async function showWeek() {
         currentDate.setDate(currentDate.getDate() + 2);
     }
 
-    for (let i = 0; i < 5; i++) { // Get next 5 weekdays
+    for (let i = 0; i < 5; i++) { 
         // Ensure we skip any remaining weekend days if we started on a weekday
         while (currentDate.getDay() === 0 || currentDate.getDay() === 6) { 
             currentDate.setDate(currentDate.getDate() + 1);
@@ -681,11 +675,11 @@ async function showWeek() {
         header.innerText = day.label;
         column.appendChild(header);
 
-        let hasAvailableSlotsForDay = false; // Variável para controlar se o dia tem qualquer slot disponível
+        let hasAvailableSlotsForDay = false; 
         horarios.forEach(hora => {
             const key = `${selectedCollaborator}_${day.dateStr}_${hora}`;
             if (!currentAgendamentos.some(ag => ag.key === key)) {
-                hasAvailableSlotsForDay = true; // Marca que o dia tem pelo menos um slot
+                hasAvailableSlotsForDay = true; 
                 const btn = document.createElement('div');
                 btn.className = 'hour';
                 btn.innerText = hora;
@@ -699,7 +693,6 @@ async function showWeek() {
             }
         });
 
-        // Só mostra o '🔴' se o dia for hoje ou futuro E não tiver horários disponíveis
         if (!hasAvailableSlotsForDay && new Date(day.dateStr + 'T00:00:00') >= new Date(new Date().toISOString().split('T')[0] + 'T00:00:00')) {
             const noAvailable = document.createElement('div');
             noAvailable.className = 'no-available';
@@ -720,7 +713,7 @@ async function openDay(dateStr) {
 
     const formattedDate = formatDateToBR(dateStr);
     dayHoursEl.innerHTML = `<h2>Horários para ${formattedDate}</h2>`;
-    
+
     const container = document.createElement('div'); 
     container.className = 'day-hours-container';
 
@@ -729,7 +722,7 @@ async function openDay(dateStr) {
 
     currentAgendamentos = await DataManager.getAllAgendamentosArray();
 
-    let hasAvailableSlotsForDay = false; // Variável para controlar se o dia tem qualquer slot disponível
+    let hasAvailableSlotsForDay = false; 
     if (currentDate < todayAtMidnight) {
          const pastDateMsg = document.createElement('div');
          pastDateMsg.className = 'no-available';
@@ -739,7 +732,7 @@ async function openDay(dateStr) {
         horarios.forEach(hora => {
             const key = `${selectedCollaborator}_${dateStr}_${hora}`;
             if (!currentAgendamentos.some(ag => ag.key === key)) {
-                hasAvailableSlotsForDay = true; // Marca que o dia tem pelo menos um slot
+                hasAvailableSlotsForDay = true; 
                 const hourBtn = document.createElement('div');
                 hourBtn.className = 'hour';
                 hourBtn.innerText = hora;
@@ -754,7 +747,6 @@ async function openDay(dateStr) {
         });
     }
 
-    // Só mostra o '🔴' se o dia for hoje ou futuro E não tiver horários disponíveis
     if (!hasAvailableSlotsForDay && currentDate >= todayAtMidnight) {
         const noAvailable = document.createElement('div');
         noAvailable.className = 'no-available';
@@ -785,7 +777,7 @@ function selectHourAndShowForm(date, hour) {
 
 async function book() {
     const nome = document.getElementById('nome').value.trim();
-    const empreendimento = document.getElementById('empreendimento').value.trim();
+    const empreendimento = document.getElementById('empreendimento').value.trim(); // Corrigido para 'empreendimento'
     const local = document.getElementById('local').value.trim();
     const telefone = document.getElementById('telefone').value.trim();
     const observacoes = document.getElementById('observacoes').value.trim();
@@ -808,10 +800,8 @@ async function book() {
         return;
     }
 
-    // O nome das propriedades aqui DEVE ser o que o SEU doPost do Apps Script espera
-    // p.colaborador, p.nome, p.empreendimento, p.local, p.telefone, p.observacoes, p.dataAgendada, p.horaAgendada
     const agendamentoData = {
-        colaborador: selectedCollaborator, // Minúscula, pois é assim que o Apps Script espera
+        colaborador: selectedCollaborator, 
         nome: nome,
         empreendimento: empreendimento,
         local: local,
@@ -822,14 +812,12 @@ async function book() {
     };
 
     const success = await DataManager.addAgendamento(agendamentoData); 
-    
+
     if (success) {
         alert(`Agendado para ${selectedCollaborator} em ${formatDateToBR(selectedDate)} às ${selectedHour} com sucesso!`);
         clearForm();
         resetAgendamentoView(); 
     } else {
-        // A mensagem de erro já é tratada dentro de DataManager.addAgendamento.
-        // Se a lógica 'já agendado' no Apps Script for ativada, a mensagem será exibida.
     }
 }
 
@@ -937,7 +925,7 @@ async function updateStats() {
     let endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 6); 
     endOfWeek.setHours(23, 59, 59, 999);
-    
+
     const totalAgendamentos = dados.length;
     const agendamentosHoje = dados.filter(item => item.data === todayStr).length;
     const agendamentosSemana = dados.filter(item => {
@@ -993,7 +981,7 @@ async function exportToCSV() {
         return;
     }
     const headers = ['Colaborador', 'Nome Responsável', 'Empreendimento', 'Local', 'Data', 'Horário', 'Telefone', 'Observações'];
-    
+
     const csvContent = [
         headers.join(','),
         ...dados.map(item => [
@@ -1005,7 +993,7 @@ async function exportToCSV() {
             item.horario,
             `"${item.telefone || ''}"`,
             `"${(item.observacoes || '').replace(/"/g, '""')}"` 
-        ].join(','))
+        ]).join('\n')
     ].join('\n');
 
     downloadFile(csvContent, 'agendamentos_vistorias.csv', 'text/csv;charset=utf-8;');
