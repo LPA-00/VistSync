@@ -87,7 +87,7 @@
 
         .selector, .back-button { margin-top: 20px; text-align: center; }
 
-        .selector button, .back-button button, .action-buttons button {
+        .selector button, .back-button button {
             background-color: var(--verde-claro);
             color: white;
             border: none;
@@ -97,7 +97,7 @@
             margin: 5px;
         }
 
-        .selector button:hover, .back-button button:hover, .action-buttons button:hover {
+        .selector button:hover, .back-button button:hover {
             background-color: var(--verde-principal);
         }
 
@@ -143,9 +143,10 @@
         
         .day-hours-container {
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* Changed to column for better stacking */
             align-items: center;
             gap: 10px;
+            margin-bottom: 20px; /* Space before action buttons */
         }
 
         .hour {
@@ -168,6 +169,25 @@
             color: white;
             border: 2px solid #d35400;
         }
+
+        .action-buttons { /* Novo estilo para o contêiner dos botões de ação */
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .action-buttons button {
+            background-color: var(--verde-principal);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .action-buttons button:hover {
+            background-color: var(--verde-claro);
+        }
+
 
         .form {
             margin-top: 20px;
@@ -486,11 +506,12 @@
 
 <script>
 const horarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
-const colaboradores = ["Cleber", "Devilson", "Mariana"]; // Lista de colaboradores
+// Adicione ou remova colaboradores aqui para que apareçam na tela e no filtro
+const colaboradores = ["Cleber", "Devilson", "Mariana"]; 
 let currentAgendamentos = {}; // Local cache of agendamentos
 let selectedCollaborator = '';
 let selectedDate = ''; // Format: YYYY-MM-DD
-let selectedHours = []; // Array para múltiplos horários
+let selectedHours = []; // Array para múltiplos horários { date: 'YYYY-MM-DD', hour: 'HH:mm', element: HTMLDivElement }
 
 const STORAGE_KEY = 'vistoriasAgendamentos'; // Mantido por compatibilidade, mas não usado diretamente para a planilha
 
@@ -503,7 +524,6 @@ class DataManager {
 
             const agendamentos = {};
             for (const ag of agendamentosArray) {
-                // Ajusta a chave para incluir o colaborador
                 const key = `${ag.colaborador}_${ag.data}_${ag.hora}`;
                 agendamentos[key] = ag;
             }
@@ -536,23 +556,19 @@ class DataManager {
 
     static async addAgendamento(data) {
         try {
-            // O App Script já verifica a existência e adiciona
             const response = await fetch(
                 'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
                 {
                     method: 'POST',
-                    mode: 'no-cors', // Necessário para evitar erro CORS com Google Apps Script
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
                 }
             );
-            // Com no-cors, 'response.ok' sempre será false.
-            // Para verificar o sucesso, você precisaria de um backend que retornasse um JSON.
-            // Por enquanto, confiamos que o Apps Script fez o trabalho.
             console.log('Agendamento enviado para a planilha.');
-            return { success: true }; // Assumimos sucesso
+            return { success: true };
         } catch (err) {
             console.error('Falha ao enviar para a planilha:', err);
             return { success: false, error: err.message };
@@ -588,19 +604,17 @@ class DataManager {
         if (confirm('ATENÇÃO: Tem certeza que deseja limpar TODOS os dados de agendamento? Esta ação é irreversível!')) {
             try {
                 const response = await fetch(
-                    'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec', // Use a mesma URL do seu App Script
+                    'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
                     {
                         method: 'POST',
-                        mode: 'no-cors', // Importante para Google Apps Script
+                        mode: 'no-cors',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ action: 'clearAll' }) // Envia uma ação para o App Script
+                        body: JSON.stringify({ action: 'clearAll' })
                     }
                 );
-                // No CORS, não conseguimos ler a resposta. Assumimos sucesso.
                 alert('Todos os dados foram solicitados para exclusão. A planilha será esvaziada em breve.');
-                // Força a recarga dos dados após a "confirmação" (mesmo que assíncrona)
                 currentAgendamentos = {};
                 await loadReports();
                 resetAgendamentoView();
@@ -617,7 +631,6 @@ async function initializeApp() {
     await renderCollaboratorCards(); // Carrega os cards de colaboradores ao iniciar
     await populateFilterCollaborators(); // Popula o filtro de colaboradores
     currentAgendamentos = await DataManager.getAgendamentos();
-    // Set default dates for filters
     const today = new Date().toISOString().split('T')[0];
     const dataInicioFilter = document.getElementById('filter-data-inicio');
     const dataFimFilter = document.getElementById('filter-data-fim');
@@ -650,7 +663,6 @@ async function populateFilterCollaborators() {
     });
 }
 
-
 async function showSection(section) {
     document.getElementById('section-agendamento').classList.add('hidden');
     document.getElementById('section-relatorios').classList.add('hidden');
@@ -665,11 +677,10 @@ async function showSection(section) {
     if (section === 'relatorios') {
         await loadReports();
     } else {
-        currentAgendamentos = await DataManager.getAgendamentos(); // 🔥 atualiza os agendamentos direto da planilha
+        currentAgendamentos = await DataManager.getAgendamentos(); 
         resetAgendamentoView();
     }
 }
-
 
 function resetAgendamentoView() {
     clearScreensAndForm();
@@ -678,7 +689,8 @@ function resetAgendamentoView() {
     document.getElementById('backButton').classList.add('hidden');
     selectedCollaborator = '';
     selectedDate = '';
-    selectedHours = []; // Limpa horários selecionados
+    selectedHours = []; 
+    updateConfirmButtonVisibility(); // Garante que botões de confirmar estejam ocultos
 }
 
 function selectCollaborator(nome) {
@@ -687,7 +699,7 @@ function selectCollaborator(nome) {
     document.getElementById('selector').classList.remove('hidden');
     document.getElementById('selectedCollaborator').innerText = `Agendar para: ${nome}`;
     document.getElementById('backButton').classList.remove('hidden');
-    // Default to week view or let user choose
+    // Não chame showWeek/showMonth aqui, deixe o usuário escolher
 }
 
 function goBack() {
@@ -698,30 +710,29 @@ function goBack() {
     const selector = document.getElementById('selector');
 
     if (form.style.display === 'flex') {
-        cancelForm(); // Esconde o formulário
+        cancelForm(); 
     } else if (!dayHours.classList.contains('hidden')) {
-        showMonth(); // Volta para o calendário mensal
-        selectedHours = []; // Limpa horários selecionados
-        document.getElementById('dayHoursActionButtons').innerHTML = ''; // Limpa botões de ação
+        showMonth();
+        selectedHours = [];
+        updateConfirmButtonVisibility();
     } else if (!weekView.classList.contains('hidden')) {
-        clearScreensAndForm(); // Volta para a seleção de modo (semana/mês)
+        clearScreensAndForm();
         selector.classList.remove('hidden');
-        selectedHours = []; // Limpa horários selecionados
-        document.getElementById('weekViewActionButtons').innerHTML = ''; // Limpa botões de ação
+        selectedHours = [];
+        updateConfirmButtonVisibility();
     } else if (!calendar.classList.contains('hidden')) {
-        clearScreensAndForm(); // Volta para a seleção de modo (semana/mês)
+        clearScreensAndForm();
         selector.classList.remove('hidden');
     } else if (!selector.classList.contains('hidden')) {
-        resetAgendamentoView(); // Volta para a seleção de colaborador
+        resetAgendamentoView();
     }
 }
 
-
 async function showMonth() {
     clearScreensAndForm();
-    currentAgendamentos = await DataManager.getAgendamentos(); // 🔥 garante dados atualizados
-    selectedHours = []; // Limpa horários selecionados
-    document.getElementById('dayHoursActionButtons').innerHTML = ''; // Limpa botões de ação
+    currentAgendamentos = await DataManager.getAgendamentos();
+    selectedHours = []; 
+    updateConfirmButtonVisibility();
 
     const calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = '';
@@ -730,7 +741,7 @@ async function showMonth() {
 
     const today = new Date();
     const year = today.getFullYear();
-    const month = today.getMonth(); // 0-indexed
+    const month = today.getMonth();
 
     const monthName = today.toLocaleString('pt-BR', { month: 'long' });
     calendarEl.innerHTML = `<h2>${monthName.charAt(0).toUpperCase() + monthName.slice(1)} / ${year}</h2>`;
@@ -751,7 +762,6 @@ async function showMonth() {
     for (let d = 1; d <= daysInMonth; d++) {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         let hasAvailable = false;
-        // Somente verifica disponibilidade para datas futuras ou o dia atual
         if (new Date(dateStr) >= new Date(new Date().toDateString())) {
             hasAvailable = horarios.some(h => !currentAgendamentos[`${selectedCollaborator}_${dateStr}_${h}`]);
         }
@@ -771,12 +781,11 @@ async function showMonth() {
     calendarEl.appendChild(grid);
 }
 
-
 async function showWeek() {
     clearScreensAndForm();
-    currentAgendamentos = await DataManager.getAgendamentos(); // 🔥 garante dados atualizados
-    selectedHours = []; // Limpa horários selecionados
-    document.getElementById('weekViewActionButtons').innerHTML = ''; // Limpa botões de ação
+    currentAgendamentos = await DataManager.getAgendamentos();
+    selectedHours = []; 
+    updateConfirmButtonVisibility();
 
     const weekViewEl = document.getElementById('weekView');
     weekViewEl.innerHTML = '<h2>Próximos 5 Dias Úteis</h2>';
@@ -787,12 +796,10 @@ async function showWeek() {
     const weekDates = [];
     let currentDate = new Date(today);
 
-    // Ajusta para o próximo dia útil se for fim de semana
-    if (currentDate.getDay() === 0) currentDate.setDate(currentDate.getDate() + 1); // Se for domingo, vai para segunda
-    if (currentDate.getDay() === 6) currentDate.setDate(currentDate.getDate() + 2); // Se for sábado, vai para segunda
+    if (currentDate.getDay() === 0) currentDate.setDate(currentDate.getDate() + 1);
+    if (currentDate.getDay() === 6) currentDate.setDate(currentDate.getDate() + 2);
 
     for (let i = 0; i < 5; i++) {
-        // Pula fins de semana para encontrar os próximos 5 dias úteis
         while (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
             currentDate.setDate(currentDate.getDate() + 1);
         }
@@ -800,7 +807,7 @@ async function showWeek() {
         const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
         const dayLabel = currentDate.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
         weekDates.push({ label: `${dayLabel} (${currentDate.getDate()}/${currentDate.getMonth() + 1})`, dateStr });
-        currentDate.setDate(currentDate.getDate() + 1); // Avança para o próximo dia para o loop
+        currentDate.setDate(currentDate.getDate() + 1);
     }
 
     const grid = document.createElement('div');
@@ -821,7 +828,6 @@ async function showWeek() {
                 const btn = document.createElement('div');
                 btn.className = 'hour';
                 btn.innerText = hora;
-                // Modificado para toggleHourSelection
                 btn.onclick = () => toggleHourSelection(day.dateStr, hora, btn);
                 column.appendChild(btn);
             }
@@ -841,22 +847,21 @@ async function showWeek() {
     renderConfirmButton('week');
 }
 
-
-function openDay(dateStr) { // dateStr format YYYY-MM-DD
+function openDay(dateStr) {
     clearScreensAndForm();
-    selectedDate = dateStr; // Define a data selecionada globalmente
-    selectedHours = []; // Limpa horários selecionados ao abrir um novo dia
-    document.getElementById('dayHoursActionButtons').innerHTML = ''; // Limpa botões de ação
+    selectedDate = dateStr; 
+    selectedHours = []; 
+    updateConfirmButtonVisibility();
 
     const dayHoursEl = document.getElementById('dayHours');
-    dayHoursEl.innerHTML = ''; // Clear previous content
+    dayHoursEl.innerHTML = '';
     dayHoursEl.classList.remove('hidden');
     document.getElementById('backButton').classList.remove('hidden');
 
     const formattedDate = formatDateToBR(dateStr);
     dayHoursEl.innerHTML = `<h2>Horários para ${formattedDate}</h2>`;
     
-    const container = document.createElement('div'); // For flex layout of hours
+    const container = document.createElement('div');
     container.className = 'day-hours-container';
 
     let available = false;
@@ -873,13 +878,11 @@ function openDay(dateStr) { // dateStr format YYYY-MM-DD
                 const hourBtn = document.createElement('div');
                 hourBtn.className = 'hour';
                 hourBtn.innerText = hora;
-                // Modificado para toggleHourSelection
                 hourBtn.onclick = () => toggleHourSelection(dateStr, hora, hourBtn);
                 container.appendChild(hourBtn);
             }
         });
     }
-
 
     if (!available && new Date(dateStr) >= new Date(new Date().toDateString())) {
         const noAvailable = document.createElement('div');
@@ -889,12 +892,10 @@ function openDay(dateStr) { // dateStr format YYYY-MM-DD
     }
     dayHoursEl.appendChild(container);
 
-    // Adiciona o botão de confirmar agendamento para o dia
     renderConfirmButton('day');
 
-    // Back button within openDay is specific to going back to month view
     const backBtnDiv = document.createElement('div');
-    backBtnDiv.className = 'back-button'; // Use existing class for styling
+    backBtnDiv.className = 'back-button';
     backBtnDiv.style.marginTop = '20px';
     const specificBackBtn = document.createElement('button');
     specificBackBtn.innerHTML = '⬅ Voltar para o Calendário Mensal';
@@ -903,17 +904,14 @@ function openDay(dateStr) { // dateStr format YYYY-MM-DD
     dayHoursEl.appendChild(backBtnDiv);
 }
 
-// Nova função para toggle de seleção de horários
 function toggleHourSelection(date, hour, element) {
-    const timeSlot = { date, hour };
+    const timeSlot = { date, hour, element }; // Store element reference
     const index = selectedHours.findIndex(s => s.date === date && s.hour === hour);
 
     if (index > -1) {
-        // Já selecionado, deseleciona
         selectedHours.splice(index, 1);
         element.classList.remove('selected');
     } else {
-        // Não selecionado, seleciona
         selectedHours.push(timeSlot);
         element.classList.add('selected');
     }
@@ -935,16 +933,18 @@ function updateConfirmButtonVisibility() {
 function renderConfirmButton(view) {
     const containerId = view === 'day' ? 'dayHoursActionButtons' : 'weekViewActionButtons';
     const container = document.getElementById(containerId);
-    container.innerHTML = ''; // Limpa botões anteriores
+    if (!container) return; // Safeguard if container is not found
 
-    const confirmBtn = document.createElement('button');
-    confirmBtn.innerText = 'Confirmar Agendamento(s)';
-    confirmBtn.onclick = showForm;
-    confirmBtn.style.display = 'none'; // Esconde inicialmente
-    confirmBtn.style.marginTop = '20px'; // Adiciona um espaçamento
-
-    container.appendChild(confirmBtn);
-    updateConfirmButtonVisibility(); // Atualiza visibilidade com base em selectedHours
+    // Only add button if it doesn't exist
+    if (!container.querySelector('button')) {
+        const confirmBtn = document.createElement('button');
+        confirmBtn.innerText = 'Confirmar Agendamento(s)';
+        confirmBtn.onclick = showForm;
+        confirmBtn.style.display = 'none'; // Esconde inicialmente
+        confirmBtn.style.marginTop = '20px'; // Adiciona um espaçamento
+        container.appendChild(confirmBtn);
+    }
+    updateConfirmButtonVisibility(); // Garante que a visibilidade seja atualizada
 }
 
 
@@ -954,9 +954,13 @@ function showForm() {
         return;
     }
     document.getElementById('form').style.display = 'flex';
-    document.getElementById('dayHours').classList.add('hidden'); // Esconde horários do dia
-    document.getElementById('weekView').classList.add('hidden'); // Esconde a visão semanal
-    document.getElementById('calendar').classList.add('hidden'); // Esconde o calendário
+    // Esconder todas as outras views de agendamento antes de mostrar o formulário
+    document.getElementById('dayHours').classList.add('hidden'); 
+    document.getElementById('weekView').classList.add('hidden'); 
+    document.getElementById('calendar').classList.add('hidden'); 
+    document.getElementById('selector').classList.add('hidden'); // Esconde também o selector (Semana/Mês)
+    document.getElementById('backButton').classList.remove('hidden'); // Mantenha o botão de voltar geral
+
     document.getElementById('nome').focus();
 }
 
@@ -980,8 +984,11 @@ async function book() {
     const successfulBookings = [];
     const failedBookings = [];
 
+    // Desabilitar o formulário enquanto os agendamentos são processados
+    document.getElementById('form').querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+
     for (const slot of selectedHours) {
-        const { date, hour } = slot;
+        const { date, hour, element } = slot;
         const bookingData = {
             nome,
             empreendimento,
@@ -993,23 +1000,27 @@ async function book() {
             horaAgendada: hour
         };
 
-        // Verifica novamente a disponibilidade antes de tentar agendar
         const key = `${selectedCollaborator}_${date}_${hour}`;
         if (currentAgendamentos[key]) {
             failedBookings.push(`${formatDateToBR(date)} às ${hour} (já agendado por outro)`);
+            if (element) element.classList.remove('selected'); // Desmarca visualmente
             continue;
         }
 
         const result = await DataManager.addAgendamento(bookingData);
         if (result.success) {
             successfulBookings.push(`${formatDateToBR(date)} às ${hour}`);
-            // Atualiza o cache local imediatamente para refletir o agendamento
-            currentAgendamentos[key] = bookingData;
+            currentAgendamentos[key] = bookingData; // Atualiza o cache local
+            if (element) element.classList.remove('selected'); // Desmarca visualmente
         } else {
             failedBookings.push(`${formatDateToBR(date)} às ${hour} (erro ao agendar)`);
+            if (element) element.classList.remove('selected'); // Desmarca visualmente
         }
-        await new Promise(resolve => setTimeout(resolve, 300)); // Pequena pausa para o Apps Script
+        await new Promise(resolve => setTimeout(resolve, 300));
     }
+
+    // Reabilitar o formulário
+    document.getElementById('form').querySelectorAll('input, textarea, button').forEach(el => el.disabled = false);
 
     let message = '';
     if (successfulBookings.length > 0) {
@@ -1025,7 +1036,7 @@ async function book() {
     }
     
     clearForm();
-    resetAgendamentoView(); // Go back to collaborator selection
+    resetAgendamentoView();
 }
 
 function clearForm() {
@@ -1037,32 +1048,38 @@ function clearForm() {
     document.getElementById('telefone').value = '';
     document.getElementById('observacoes').value = '';
     selectedHours = []; // Limpa horários selecionados
+    // Garante que os elementos visuais dos horários também sejam desmarcados
+    document.querySelectorAll('.hour.selected').forEach(el => el.classList.remove('selected'));
+    updateConfirmButtonVisibility(); // Oculta o botão de confirmar se não há horários
 }
-
 
 function cancelForm() {
     clearForm();
-    // Volta para a view anterior (dia ou semana)
-    if (!document.getElementById('weekView').classList.contains('hidden')) {
-        showWeek();
-    } else {
-        openDay(selectedDate); // Reabre o dia
+    // Tenta voltar para a visualização anterior de forma inteligente
+    if (selectedDate) { // Se uma data estava selecionada, tenta voltar para o dia
+        openDay(selectedDate);
+    } else if (selectedCollaborator) { // Se um colaborador estava selecionado, mas nenhuma data, volta para o selector
+        clearScreensAndForm();
+        document.getElementById('selector').classList.remove('hidden');
+        document.getElementById('backButton').classList.remove('hidden');
+    } else { // Caso contrário, volta para a seleção de colaborador
+        resetAgendamentoView();
     }
 }
-
 
 function clearScreensAndForm() {
     document.getElementById('calendar').classList.add('hidden');
     document.getElementById('dayHours').classList.add('hidden');
     document.getElementById('weekView').classList.add('hidden');
-    document.getElementById('dayHoursActionButtons').innerHTML = ''; // Limpa botões de ação
-    document.getElementById('weekViewActionButtons').innerHTML = ''; // Limpa botões de ação
-    clearForm();
+    // Certifique-se de limpar os botões de ação também
+    document.getElementById('dayHoursActionButtons').innerHTML = '';
+    document.getElementById('weekViewActionButtons').innerHTML = '';
+    clearForm(); // Isso também limpa selectedHours e desmarca elementos visuais
 }
 
 // --- Funções de Relatório ---
 async function loadReports() {
-    await applyFilters(); // This will fetch and render
+    await applyFilters();
     await updateStats();
 }
 
@@ -1074,10 +1091,8 @@ async function applyFilters() {
 
     let dados = await DataManager.getAllAgendamentosArray();
 
-    // Ensure dates are comparable (Date objects at midnight UTC for YYYY-MM-DD)
     dataInicioFilter = dataInicioFilter ? new Date(dataInicioFilter + 'T00:00:00Z') : null;
     dataFimFilter = dataFimFilter ? new Date(dataFimFilter + 'T00:00:00Z') : null;
-
 
     if (colaboradorFilter) {
         dados = dados.filter(item => item.colaborador === colaboradorFilter);
@@ -1093,7 +1108,6 @@ async function applyFilters() {
     }
     renderTable(dados);
 }
-
 
 function renderTable(dados) {
     const tbody = document.getElementById('reports-tbody');
@@ -1126,21 +1140,20 @@ function renderTable(dados) {
 async function updateStats() {
     const dados = await DataManager.getAllAgendamentosArray();
     const today = new Date();
-    const todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD for comparison
+    const todayStr = today.toISOString().split('T')[0];
 
-    // Adjust startOfWeek and endOfWeek to be Monday to Sunday of the CURRENT week
     let startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1)); // Monday
+    startOfWeek.setDate(today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1));
     startOfWeek.setHours(0, 0, 0, 0);
 
     let endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
     endOfWeek.setHours(23, 59, 59, 999);
     
     const totalAgendamentos = dados.length;
     const agendamentosHoje = dados.filter(item => item.data === todayStr).length;
     const agendamentosSemana = dados.filter(item => {
-        const itemDate = new Date(item.data + "T00:00:00"); // Ensure comparison at start of day
+        const itemDate = new Date(item.data + "T00:00:00");
         return itemDate >= startOfWeek && itemDate <= endOfWeek;
     }).length;
 
@@ -1164,7 +1177,6 @@ async function updateStats() {
             <div class="stat-label">Esta Semana (Seg-Dom)</div>
         </div>
     `;
-    // Add stats for each collaborator dynamically
     Object.entries(agendamentosPorColaborador).forEach(([colaborador, count]) => {
         const statCard = document.createElement('div');
         statCard.className = 'stat-card';
@@ -1179,21 +1191,18 @@ async function updateStats() {
     }
 }
 
-
 async function removeAgendamento(key) {
     if (confirm('Tem certeza que deseja excluir este agendamento?')) {
         await DataManager.removeAgendamento(key);
-        // Espera um pouco para a planilha processar a remoção
         await new Promise(resolve => setTimeout(resolve, 1500));
-        currentAgendamentos = await DataManager.getAgendamentos(); // Atualiza o cache
-        await loadReports(); // Recarrega relatórios
+        currentAgendamentos = await DataManager.getAgendamentos();
+        await loadReports();
         alert('Agendamento excluído com sucesso!');
     }
 }
 
 async function clearAllData() {
     await DataManager.clearAllData();
-    // Após limpar, atualiza a interface
     currentAgendamentos = await DataManager.getAgendamentos();
     await loadReports();
     resetAgendamentoView();
@@ -1205,7 +1214,6 @@ async function exportToCSV() {
         alert('Não há dados para exportar!');
         return;
     }
-    // User request: Colaborador, Nome, empreendimento e local
     const headers = ['Colaborador', 'Nome Responsável', 'Empreendimento', 'Local', 'Data', 'Horário', 'Telefone', 'Observações'];
     
     const csvContent = [
@@ -1218,7 +1226,7 @@ async function exportToCSV() {
             formatDateToBR(item.data),
             item.horario,
             `"${item.telefone || ''}"`,
-            `"${(item.observacoes || '').replace(/"/g, '""')}"` // Escape double quotes
+            `"${(item.observacoes || '').replace(/"/g, '""')}"`
         ].join(','))
     ].join('\n');
 
@@ -1241,13 +1249,12 @@ function downloadFile(content, filename, contentType) {
     URL.revokeObjectURL(url);
 }
 
-function formatDateToBR(dateStr) { // YYYY-MM-DD to DD/MM/YYYY
-    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr; // Return original if invalid
+function formatDateToBR(dateStr) {
+    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
     const [year, month, day] = dateStr.split('-');
     return `${day}/${month}/${year}`;
 }
 
-// Inicializar ao carregar a página
 document.addEventListener('DOMContentLoaded', initializeApp);
 
 </script>
