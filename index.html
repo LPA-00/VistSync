@@ -8,144 +8,140 @@
         :root {
             --verde-principal: rgb(52, 69, 55);
             --verde-claro: rgb(72, 95, 75);
-            --branco: 
-#f5f5f5;
-            --cinza: 
-#e0e0e0;
-            --vermelho: 
-#e74c3c;
-            --azul: 
-#3498db;
+            --branco: #f5f5f5;
+            --cinza: #e0e0e0;
+            --vermelho: #e74c3c;
+            --azul: #3498db;
+            --laranja: #e67e22; /* Nova cor para horário selecionado */
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; } /* Added asterisk for global reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-          background-color: var(--branco);
-          font-family: Arial, sans-serif;
-          color: var(--verde-principal);
-          padding: 20px;
+            background-color: var(--branco);
+            font-family: Arial, sans-serif;
+            color: var(--verde-principal);
+            padding: 20px;
         }
 
         .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 30px;
-          padding: 0 20px;
-          flex-wrap: wrap; /* Allow wrapping for smaller screens */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            flex-wrap: wrap;
         }
 
         .header h1 {
-            margin-bottom: 10px; /* Adjust margin for h1 in header */
+            margin-bottom: 10px;
         }
 
         .nav-buttons {
-          display: flex;
-          gap: 10px;
+            display: flex;
+            gap: 10px;
         }
 
         .nav-btn {
-          background-color: var(--azul);
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 8px;
-          cursor: pointer;
-          transition: background-color 0.3s;
+            background-color: var(--azul);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .nav-btn:hover {
-          background-color: 
-#2980b9;
+            background-color: #2980b9;
         }
 
         .nav-btn.active {
-          background-color: var(--verde-principal);
+            background-color: var(--verde-principal);
         }
 
         h1, h2 { text-align: center; margin-bottom: 20px; }
 
         .card-container {
-          display: flex;
-          justify-content: center;
-          gap: 20px;
-          flex-wrap: wrap;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .card {
-          background-color: var(--verde-principal);
-          color: var(--branco);
-          padding: 20px;
-          border-radius: 12px;
-          cursor: pointer;
-          width: 180px;
-          text-align: center;
-          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-          transition: transform 0.3s;
+            background-color: var(--verde-principal);
+            color: var(--branco);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
         }
 
         .card:hover { transform: scale(1.05); }
 
-        .hidden { display: none !important; } /* Added !important for stronger override */
+        .hidden { display: none !important; }
 
         .selector, .back-button { margin-top: 20px; text-align: center; }
 
-        .selector button, .back-button button {
-          background-color: var(--verde-claro);
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 8px;
-          cursor: pointer;
-          margin: 5px;
+        .selector button, .back-button button, .action-buttons button {
+            background-color: var(--verde-claro);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
         }
 
-        .selector button:hover, .back-button button:hover {
-          background-color: var(--verde-principal);
+        .selector button:hover, .back-button button:hover, .action-buttons button:hover {
+            background-color: var(--verde-principal);
         }
 
         .calendar-grid {
-          display: grid;
-          grid-template-columns: repeat(7, 1fr);
-          gap: 10px;
-          max-width: 700px; /* Limit calendar width */
-          margin: 0 auto; /* Center calendar */
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .header-cell {
-          font-weight: bold;
-          text-align: center;
-          padding: 10px 0;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px 0;
         }
 
         .day-card {
-          background-color: var(--cinza);
-          padding: 15px;
-          border-radius: 8px;
-          cursor: pointer;
-          text-align: center;
-          position: relative;
-          min-height: 50px; /* Ensure consistent height */
-          display: flex; /* For centering content */
-          align-items: center; /* For centering content */
-          justify-content: center; /* For centering content */
+            background-color: var(--cinza);
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .day-card:hover {
-          background-color: var(--verde-claro);
-          color: white;
+            background-color: var(--verde-claro);
+            color: white;
         }
 
         .icon-red {
-          color: var(--vermelho);
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          font-size: 18px;
+            color: var(--vermelho);
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 18px;
         }
         
-        .day-hours-container { /* Wrapper for day hours for better layout */
+        .day-hours-container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -153,53 +149,59 @@
         }
 
         .hour {
-          background-color: var(--cinza);
-          padding: 10px;
-          border-radius: 8px;
-          cursor: pointer;
-          text-align: center;
-          margin: 5px;
-          min-width: 80px;
+            background-color: var(--cinza);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            margin: 5px;
+            min-width: 80px;
         }
 
         .hour:hover {
-          background-color: var(--verde-claro);
-          color: white;
+            background-color: var(--verde-claro);
+            color: white;
+        }
+
+        .hour.selected { /* Estilo para horário selecionado */
+            background-color: var(--laranja);
+            color: white;
+            border: 2px solid #d35400;
         }
 
         .form {
-          margin-top: 20px;
-          display: none; /* Initially hidden, controlled by JS */
-          flex-direction: column;
-          gap: 10px;
-          max-width: 400px;
-          margin-left: auto;
-          margin-right: auto;
-          background-color: var(--cinza);
-          padding: 20px;
-          border-radius: 12px;
+            margin-top: 20px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: var(--cinza);
+            padding: 20px;
+            border-radius: 12px;
         }
 
         .form input, .form textarea {
-          padding: 8px;
-          border: 1px solid #ccc;
-          border-radius: 6px;
-          font-family: inherit;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
         }
 
         .form button {
-          background-color: var(--verde-principal);
-          color: white;
-          border: none;
-          padding: 10px;
-          border-radius: 8px;
-          cursor: pointer;
+            background-color: var(--verde-principal);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
         }
 
         .form button:hover {
-          background-color: var(--verde-claro);
+            background-color: var(--verde-claro);
         }
-        .form button[type="button"] { /* Style for cancel button */
+        .form button[type="button"] {
             background-color: var(--vermelho);
         }
         .form button[type="button"]:hover {
@@ -208,174 +210,168 @@
 
 
         .no-available {
-          color: var(--vermelho);
-          text-align: center;
-          margin-top: 10px;
-          font-style: italic;
+            color: var(--vermelho);
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
         }
 
         .week-grid {
-          display: grid;
-          grid-template-columns: repeat(5, 1fr); /* Mon-Fri */
-          gap: 10px;
-          margin-top: 20px;
-          max-width: 800px; /* Limit width */
-          margin-left: auto;
-          margin-right: auto;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .week-grid > div { /* Column in week grid */
+        .week-grid > div {
             background-color: #f9f9f9;
             padding: 10px;
             border-radius: 8px;
             border: 1px solid var(--cinza);
         }
 
-
         /* Estilos para relatórios */
         .report-container {
-          max-width: 1200px;
-          margin: 0 auto;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .filter-section {
-          background-color: var(--cinza);
-          padding: 20px;
-          border-radius: 12px;
-          margin-bottom: 20px;
+            background-color: var(--cinza);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
 
         .filter-row {
-          display: flex;
-          gap: 15px;
-          margin-bottom: 15px;
-          flex-wrap: wrap;
-          align-items: end;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            align-items: end;
         }
 
         .filter-group {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .filter-group label {
-          font-weight: bold;
-          font-size: 14px;
+            font-weight: bold;
+            font-size: 14px;
         }
 
         .filter-group input, .filter-group select {
-          padding: 8px;
-          border: 1px solid #ccc;
-          border-radius: 6px;
-          min-width: 150px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            min-width: 150px;
         }
 
         .export-buttons {
-          display: flex;
-          gap: 10px;
-          justify-content: center;
-          margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
         }
 
         .export-btn {
-          background-color: var(--azul);
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 8px;
-          cursor: pointer;
+            background-color: var(--azul);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
         }
 
         .export-btn:hover {
-          background-color: 
-#2980b9;
+            background-color: #2980b9;
         }
 
         .table-container {
-          overflow-x: auto;
-          background-color: white;
-          border-radius: 12px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         table {
-          width: 100%;
-          border-collapse: collapse;
+            width: 100%;
+            border-collapse: collapse;
         }
 
         th, td {
-          padding: 12px;
-          text-align: left;
-          border-bottom: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
         th {
-          background-color: var(--verde-principal);
-          color: white;
-          font-weight: bold;
-          position: sticky; /* Make table headers sticky */
-          top: 0;
+            background-color: var(--verde-principal);
+            color: white;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
         }
 
         tr:hover {
-          background-color: 
-#f8f9fa;
+            background-color: #f8f9fa;
         }
 
         .status-badge {
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 12px;
-          font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
         }
 
         .status-agendado {
-          background-color: 
-#e8f5e8;
-          color: 
-#2d5016;
+            background-color: #e8f5e8;
+            color: #2d5016;
         }
 
         .action-btn {
-          background-color: var(--vermelho);
-          color: white;
-          border: none;
-          padding: 5px 10px;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 12px;
+            background-color: var(--vermelho);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
         }
 
         .action-btn:hover {
-          background-color: 
-#c0392b;
+            background-color: #c0392b;
         }
 
         .stats-container {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 20px;
-          margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .stat-card {
-          background-color: white;
-          padding: 20px;
-          border-radius: 12px;
-          text-align: center;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .stat-number {
-          font-size: 2em;
-          font-weight: bold;
-          color: var(--verde-principal);
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--verde-principal);
         }
 
         .stat-label {
-          color: #666;
-          margin-top: 5px;
+            color: #666;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -388,14 +384,9 @@
         </div>
     </div>
 
-    <!-- Seção de Agendamento -->
     <div id="section-agendamento">
         <div class="card-container" id="collaborators">
-            <!-- Colaboradores serão carregados aqui se necessário, ou estáticos como abaixo -->
-            <div class="card" onclick="selectCollaborator('Cleber')">Cleber</div>
-            <div class="card" onclick="selectCollaborator('Devilson')">Devilson</div>
-            <!-- Adicionar mais colaboradores aqui se necessário -->
-        </div>
+            </div>
 
         <div class="selector hidden" id="selector">
             <h2 id="selectedCollaborator"></h2>
@@ -408,15 +399,16 @@
         </div>
 
         <div class="calendar hidden" id="calendar">
-            <!-- Calendário Mês será gerado aqui -->
-        </div>
+            </div>
 
         <div class="day-hours hidden" id="dayHours">
-             <!-- Horários do Dia serão gerados aqui -->
+             <div class="action-buttons" id="dayHoursActionButtons">
+                 </div>
         </div>
         
         <div class="week-view hidden" id="weekView">
-            <!-- Visualização Semanal será gerada aqui -->
+            <div class="action-buttons" id="weekViewActionButtons">
+                 </div>
         </div>
 
         <div class="form" id="form">
@@ -431,7 +423,6 @@
         </div>
     </div>
 
-    <!-- Seção de Relatórios -->
     <div id="section-relatorios" class="hidden">
         <div class="report-container">
             <div class="filter-section">
@@ -441,10 +432,7 @@
                         <label for="filter-colaborador">Colaborador:</label>
                         <select id="filter-colaborador">
                             <option value="">Todos</option>
-                            <option value="Cleber">Cleber</option>
-                            <option value="Devilson">Devilson</option>
-                            <!-- Adicionar mais colaboradores aqui se necessário -->
-                        </select>
+                            </select>
                     </div>
                     <div class="filter-group">
                         <label for="filter-data-inicio">Data Inicial:</label>
@@ -459,15 +447,14 @@
                         <input type="text" id="filter-empreendimento" placeholder="Filtrar por empreendimento">
                     </div>
                     <div class="filter-group">
-                        <label> </label>
+                        <label> </label>
                         <button class="nav-btn" onclick="applyFilters()">Filtrar</button>
                     </div>
                 </div>
             </div>
 
             <div class="stats-container" id="stats-container">
-                <!-- Estatísticas serão inseridas aqui -->
-            </div>
+                </div>
 
             <div class="export-buttons">
                 <button class="export-btn" onclick="exportToCSV()">Exportar CSV</button>
@@ -491,8 +478,7 @@
                         </tr>
                     </thead>
                     <tbody id="reports-tbody">
-                        <!-- Dados serão inseridos aqui -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </div>
@@ -500,18 +486,15 @@
 
 <script>
 const horarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+const colaboradores = ["Cleber", "Devilson", "Mariana"]; // Lista de colaboradores
 let currentAgendamentos = {}; // Local cache of agendamentos
 let selectedCollaborator = '';
 let selectedDate = ''; // Format: YYYY-MM-DD
-let selectedHour = '';
+let selectedHours = []; // Array para múltiplos horários
 
-const STORAGE_KEY = 'vistoriasAgendamentos';
+const STORAGE_KEY = 'vistoriasAgendamentos'; // Mantido por compatibilidade, mas não usado diretamente para a planilha
 
 // --- DataManager START ---
-// Simulates an API or a more complex data storage mechanism.
-// For GitHub Pages without a backend, localStorage is the simplest persistent option (per browser).
-// To make this a truly shared database, you'd replace localStorage calls with API calls (fetch)
-// to a backend service (e.g., Firebase, Supabase, custom API).
 class DataManager {
     static async getAgendamentos() {
         try {
@@ -520,6 +503,7 @@ class DataManager {
 
             const agendamentos = {};
             for (const ag of agendamentosArray) {
+                // Ajusta a chave para incluir o colaborador
                 const key = `${ag.colaborador}_${ag.data}_${ag.hora}`;
                 agendamentos[key] = ag;
             }
@@ -549,11 +533,89 @@ class DataManager {
             return dateA - dateB;
         });
     }
-}
 
+    static async addAgendamento(data) {
+        try {
+            // O App Script já verifica a existência e adiciona
+            const response = await fetch(
+                'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
+                {
+                    method: 'POST',
+                    mode: 'no-cors', // Necessário para evitar erro CORS com Google Apps Script
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }
+            );
+            // Com no-cors, 'response.ok' sempre será false.
+            // Para verificar o sucesso, você precisaria de um backend que retornasse um JSON.
+            // Por enquanto, confiamos que o Apps Script fez o trabalho.
+            console.log('Agendamento enviado para a planilha.');
+            return { success: true }; // Assumimos sucesso
+        } catch (err) {
+            console.error('Falha ao enviar para a planilha:', err);
+            return { success: false, error: err.message };
+        }
+    }
+
+    static async removeAgendamento(key) {
+        if (!key) {
+            console.error("Chave de agendamento inválida para remoção.");
+            return { success: false, error: "Chave inválida" };
+        }
+        try {
+            const response = await fetch(
+                'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
+                {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action: 'delete', key: key })
+                }
+            );
+            console.log('Solicitação de exclusão enviada.');
+            return { success: true };
+        } catch (err) {
+            console.error('Falha ao enviar solicitação de exclusão para a planilha:', err);
+            return { success: false, error: err.message };
+        }
+    }
+
+    static async clearAllData() {
+        if (confirm('ATENÇÃO: Tem certeza que deseja limpar TODOS os dados de agendamento? Esta ação é irreversível!')) {
+            try {
+                const response = await fetch(
+                    'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec', // Use a mesma URL do seu App Script
+                    {
+                        method: 'POST',
+                        mode: 'no-cors', // Importante para Google Apps Script
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ action: 'clearAll' }) // Envia uma ação para o App Script
+                    }
+                );
+                // No CORS, não conseguimos ler a resposta. Assumimos sucesso.
+                alert('Todos os dados foram solicitados para exclusão. A planilha será esvaziada em breve.');
+                // Força a recarga dos dados após a "confirmação" (mesmo que assíncrona)
+                currentAgendamentos = {};
+                await loadReports();
+                resetAgendamentoView();
+            } catch (error) {
+                console.error("Erro ao tentar limpar todos os dados:", error);
+                alert("Ocorreu um erro ao tentar limpar os dados. Verifique o console para mais detalhes.");
+            }
+        }
+    }
+}
 // --- DataManager END ---
 
 async function initializeApp() {
+    await renderCollaboratorCards(); // Carrega os cards de colaboradores ao iniciar
+    await populateFilterCollaborators(); // Popula o filtro de colaboradores
     currentAgendamentos = await DataManager.getAgendamentos();
     // Set default dates for filters
     const today = new Date().toISOString().split('T')[0];
@@ -564,6 +626,30 @@ async function initializeApp() {
     
     showSection('agendamento'); // Default section
 }
+
+async function renderCollaboratorCards() {
+    const container = document.getElementById('collaborators');
+    container.innerHTML = ''; // Limpa os cards existentes
+    colaboradores.forEach(colaborador => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerText = colaborador;
+        card.onclick = () => selectCollaborator(colaborador);
+        container.appendChild(card);
+    });
+}
+
+async function populateFilterCollaborators() {
+    const select = document.getElementById('filter-colaborador');
+    select.innerHTML = '<option value="">Todos</option>'; // Opção padrão
+    colaboradores.forEach(colaborador => {
+        const option = document.createElement('option');
+        option.value = colaborador;
+        option.innerText = colaborador;
+        select.appendChild(option);
+    });
+}
+
 
 async function showSection(section) {
     document.getElementById('section-agendamento').classList.add('hidden');
@@ -592,7 +678,7 @@ function resetAgendamentoView() {
     document.getElementById('backButton').classList.add('hidden');
     selectedCollaborator = '';
     selectedDate = '';
-    selectedHour = '';
+    selectedHours = []; // Limpa horários selecionados
 }
 
 function selectCollaborator(nome) {
@@ -600,35 +686,33 @@ function selectCollaborator(nome) {
     document.getElementById('collaborators').classList.add('hidden');
     document.getElementById('selector').classList.remove('hidden');
     document.getElementById('selectedCollaborator').innerText = `Agendar para: ${nome}`;
-    document.getElementById('backButton').classList.remove('hidden'); // Show back button to select collaborator
+    document.getElementById('backButton').classList.remove('hidden');
     // Default to week view or let user choose
 }
 
-function goBack() { // Main back button logic
+function goBack() {
     const form = document.getElementById('form');
     const dayHours = document.getElementById('dayHours');
     const calendar = document.getElementById('calendar');
     const weekView = document.getElementById('weekView');
     const selector = document.getElementById('selector');
 
-    if (form.style.display === 'flex') { // If form is visible, go back to day/week view
-        cancelForm();
-        if (selectedDate && selectedHour) { // implies we came from day view or week view
-             // Re-show the previous view (day or week)
-            if (document.getElementById('calendar').classList.contains('hidden')) { // came from week
-                showWeek();
-            } else { // came from month > day
-                openDay(selectedDate);
-            }
-        }
-    } else if (!dayHours.classList.contains('hidden')) { // If dayHours is visible, go back to month calendar
-        showMonth();
-    } else if (!calendar.classList.contains('hidden') || !weekView.classList.contains('hidden')) { // If calendar or weekView is visible, go to selector
-        clearScreensAndForm();
+    if (form.style.display === 'flex') {
+        cancelForm(); // Esconde o formulário
+    } else if (!dayHours.classList.contains('hidden')) {
+        showMonth(); // Volta para o calendário mensal
+        selectedHours = []; // Limpa horários selecionados
+        document.getElementById('dayHoursActionButtons').innerHTML = ''; // Limpa botões de ação
+    } else if (!weekView.classList.contains('hidden')) {
+        clearScreensAndForm(); // Volta para a seleção de modo (semana/mês)
         selector.classList.remove('hidden');
-        document.getElementById('backButton').classList.remove('hidden'); // Keep back button to go to collaborators
-    } else if (!selector.classList.contains('hidden')) { // If selector is visible, go to collaborators
-        resetAgendamentoView();
+        selectedHours = []; // Limpa horários selecionados
+        document.getElementById('weekViewActionButtons').innerHTML = ''; // Limpa botões de ação
+    } else if (!calendar.classList.contains('hidden')) {
+        clearScreensAndForm(); // Volta para a seleção de modo (semana/mês)
+        selector.classList.remove('hidden');
+    } else if (!selector.classList.contains('hidden')) {
+        resetAgendamentoView(); // Volta para a seleção de colaborador
     }
 }
 
@@ -636,6 +720,8 @@ function goBack() { // Main back button logic
 async function showMonth() {
     clearScreensAndForm();
     currentAgendamentos = await DataManager.getAgendamentos(); // 🔥 garante dados atualizados
+    selectedHours = []; // Limpa horários selecionados
+    document.getElementById('dayHoursActionButtons').innerHTML = ''; // Limpa botões de ação
 
     const calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = '';
@@ -665,6 +751,7 @@ async function showMonth() {
     for (let d = 1; d <= daysInMonth; d++) {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         let hasAvailable = false;
+        // Somente verifica disponibilidade para datas futuras ou o dia atual
         if (new Date(dateStr) >= new Date(new Date().toDateString())) {
             hasAvailable = horarios.some(h => !currentAgendamentos[`${selectedCollaborator}_${dateStr}_${h}`]);
         }
@@ -688,6 +775,8 @@ async function showMonth() {
 async function showWeek() {
     clearScreensAndForm();
     currentAgendamentos = await DataManager.getAgendamentos(); // 🔥 garante dados atualizados
+    selectedHours = []; // Limpa horários selecionados
+    document.getElementById('weekViewActionButtons').innerHTML = ''; // Limpa botões de ação
 
     const weekViewEl = document.getElementById('weekView');
     weekViewEl.innerHTML = '<h2>Próximos 5 Dias Úteis</h2>';
@@ -698,10 +787,12 @@ async function showWeek() {
     const weekDates = [];
     let currentDate = new Date(today);
 
-    if (currentDate.getDay() === 0) currentDate.setDate(currentDate.getDate() + 1);
-    if (currentDate.getDay() === 6) currentDate.setDate(currentDate.getDate() + 2);
+    // Ajusta para o próximo dia útil se for fim de semana
+    if (currentDate.getDay() === 0) currentDate.setDate(currentDate.getDate() + 1); // Se for domingo, vai para segunda
+    if (currentDate.getDay() === 6) currentDate.setDate(currentDate.getDate() + 2); // Se for sábado, vai para segunda
 
     for (let i = 0; i < 5; i++) {
+        // Pula fins de semana para encontrar os próximos 5 dias úteis
         while (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
             currentDate.setDate(currentDate.getDate() + 1);
         }
@@ -709,7 +800,7 @@ async function showWeek() {
         const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
         const dayLabel = currentDate.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
         weekDates.push({ label: `${dayLabel} (${currentDate.getDate()}/${currentDate.getMonth() + 1})`, dateStr });
-        currentDate.setDate(currentDate.getDate() + 1);
+        currentDate.setDate(currentDate.getDate() + 1); // Avança para o próximo dia para o loop
     }
 
     const grid = document.createElement('div');
@@ -730,7 +821,8 @@ async function showWeek() {
                 const btn = document.createElement('div');
                 btn.className = 'hour';
                 btn.innerText = hora;
-                btn.onclick = () => selectHourAndShowForm(day.dateStr, hora);
+                // Modificado para toggleHourSelection
+                btn.onclick = () => toggleHourSelection(day.dateStr, hora, btn);
                 column.appendChild(btn);
             }
         });
@@ -744,12 +836,18 @@ async function showWeek() {
         grid.appendChild(column);
     });
     weekViewEl.appendChild(grid);
-}
 
+    // Adiciona o botão de confirmar agendamento para a semana
+    renderConfirmButton('week');
+}
 
 
 function openDay(dateStr) { // dateStr format YYYY-MM-DD
     clearScreensAndForm();
+    selectedDate = dateStr; // Define a data selecionada globalmente
+    selectedHours = []; // Limpa horários selecionados ao abrir um novo dia
+    document.getElementById('dayHoursActionButtons').innerHTML = ''; // Limpa botões de ação
+
     const dayHoursEl = document.getElementById('dayHours');
     dayHoursEl.innerHTML = ''; // Clear previous content
     dayHoursEl.classList.remove('hidden');
@@ -763,10 +861,10 @@ function openDay(dateStr) { // dateStr format YYYY-MM-DD
 
     let available = false;
     if (new Date(dateStr) < new Date(new Date().toDateString())) {
-         const pastDateMsg = document.createElement('div');
-         pastDateMsg.className = 'no-available';
-         pastDateMsg.innerText = 'Não é possível agendar em datas passadas.';
-         container.appendChild(pastDateMsg);
+        const pastDateMsg = document.createElement('div');
+        pastDateMsg.className = 'no-available';
+        pastDateMsg.innerText = 'Não é possível agendar em datas passadas.';
+        container.appendChild(pastDateMsg);
     } else {
         horarios.forEach(hora => {
             const key = `${selectedCollaborator}_${dateStr}_${hora}`;
@@ -775,7 +873,8 @@ function openDay(dateStr) { // dateStr format YYYY-MM-DD
                 const hourBtn = document.createElement('div');
                 hourBtn.className = 'hour';
                 hourBtn.innerText = hora;
-                hourBtn.onclick = () => selectHourAndShowForm(dateStr, hora);
+                // Modificado para toggleHourSelection
+                hourBtn.onclick = () => toggleHourSelection(dateStr, hora, hourBtn);
                 container.appendChild(hourBtn);
             }
         });
@@ -790,6 +889,9 @@ function openDay(dateStr) { // dateStr format YYYY-MM-DD
     }
     dayHoursEl.appendChild(container);
 
+    // Adiciona o botão de confirmar agendamento para o dia
+    renderConfirmButton('day');
+
     // Back button within openDay is specific to going back to month view
     const backBtnDiv = document.createElement('div');
     backBtnDiv.className = 'back-button'; // Use existing class for styling
@@ -801,14 +903,60 @@ function openDay(dateStr) { // dateStr format YYYY-MM-DD
     dayHoursEl.appendChild(backBtnDiv);
 }
 
+// Nova função para toggle de seleção de horários
+function toggleHourSelection(date, hour, element) {
+    const timeSlot = { date, hour };
+    const index = selectedHours.findIndex(s => s.date === date && s.hour === hour);
 
-function selectHourAndShowForm(date, hour) {
-    selectedDate = date; // YYYY-MM-DD
-    selectedHour = hour;
+    if (index > -1) {
+        // Já selecionado, deseleciona
+        selectedHours.splice(index, 1);
+        element.classList.remove('selected');
+    } else {
+        // Não selecionado, seleciona
+        selectedHours.push(timeSlot);
+        element.classList.add('selected');
+    }
+    updateConfirmButtonVisibility();
+}
+
+function updateConfirmButtonVisibility() {
+    const confirmButtonDay = document.querySelector('#dayHoursActionButtons button');
+    const confirmButtonWeek = document.querySelector('#weekViewActionButtons button');
+
+    if (confirmButtonDay) {
+        confirmButtonDay.style.display = selectedHours.length > 0 ? 'inline-block' : 'none';
+    }
+    if (confirmButtonWeek) {
+        confirmButtonWeek.style.display = selectedHours.length > 0 ? 'inline-block' : 'none';
+    }
+}
+
+function renderConfirmButton(view) {
+    const containerId = view === 'day' ? 'dayHoursActionButtons' : 'weekViewActionButtons';
+    const container = document.getElementById(containerId);
+    container.innerHTML = ''; // Limpa botões anteriores
+
+    const confirmBtn = document.createElement('button');
+    confirmBtn.innerText = 'Confirmar Agendamento(s)';
+    confirmBtn.onclick = showForm;
+    confirmBtn.style.display = 'none'; // Esconde inicialmente
+    confirmBtn.style.marginTop = '20px'; // Adiciona um espaçamento
+
+    container.appendChild(confirmBtn);
+    updateConfirmButtonVisibility(); // Atualiza visibilidade com base em selectedHours
+}
+
+
+function showForm() {
+    if (selectedHours.length === 0) {
+        alert('Por favor, selecione ao menos um horário para agendar.');
+        return;
+    }
     document.getElementById('form').style.display = 'flex';
-    document.getElementById('dayHours').classList.add('hidden'); // Hide day hours
-    document.getElementById('weekView').classList.add('hidden'); // Hide week view
-    document.getElementById('calendar').classList.add('hidden'); // Hide month calendar
+    document.getElementById('dayHours').classList.add('hidden'); // Esconde horários do dia
+    document.getElementById('weekView').classList.add('hidden'); // Esconde a visão semanal
+    document.getElementById('calendar').classList.add('hidden'); // Esconde o calendário
     document.getElementById('nome').focus();
 }
 
@@ -824,67 +972,58 @@ async function book() {
         return;
     }
 
-const key = `${selectedCollaborator}_${selectedDate}_${selectedHour}`;
-
-// Primeiro envia para a planilha
-try {
-    await fetch(
-        'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
-        {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                nome,
-                empreendimento,
-                local,
-                telefone,
-                observacoes,
-                colaborador: selectedCollaborator,
-                dataAgendada: selectedDate,
-                horaAgendada: selectedHour
-            })
-        }
-    );
-} catch (err) {
-    console.error('Falha ao enviar para a planilha:', err);
-}
-
-// Aguarda e atualiza os dados após enviar
-await new Promise(resolve => setTimeout(resolve, 1500));
-currentAgendamentos = await DataManager.getAgendamentos();
-
-    /* ------------- ENVIA PARA GOOGLE SHEETS ------------- */
-    try {
-        await fetch(
-            'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
-            {
-                method: 'POST',
-                mode:'no-cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    nome,
-                    empreendimento,
-                    local,
-                    telefone,
-                    observacoes,
-                    colaborador: selectedCollaborator,
-                    dataAgendada: selectedDate,   // formato YYYY-MM-DD
-                    horaAgendada: selectedHour
-                })
-            }
-        );
-    } catch (err) {
-        console.error('Falha ao enviar para a planilha:', err);
+    if (selectedHours.length === 0) {
+        alert('Nenhum horário selecionado para agendar. Por favor, selecione um horário.');
+        return;
     }
-    /* ---------------------------------------------------- */
 
+    const successfulBookings = [];
+    const failedBookings = [];
 
-    alert(`Agendado para ${selectedCollaborator} em ${formatDateToBR(selectedDate)} às ${selectedHour} com sucesso!`);
+    for (const slot of selectedHours) {
+        const { date, hour } = slot;
+        const bookingData = {
+            nome,
+            empreendimento,
+            local,
+            telefone,
+            observacoes,
+            colaborador: selectedCollaborator,
+            dataAgendada: date,
+            horaAgendada: hour
+        };
+
+        // Verifica novamente a disponibilidade antes de tentar agendar
+        const key = `${selectedCollaborator}_${date}_${hour}`;
+        if (currentAgendamentos[key]) {
+            failedBookings.push(`${formatDateToBR(date)} às ${hour} (já agendado por outro)`);
+            continue;
+        }
+
+        const result = await DataManager.addAgendamento(bookingData);
+        if (result.success) {
+            successfulBookings.push(`${formatDateToBR(date)} às ${hour}`);
+            // Atualiza o cache local imediatamente para refletir o agendamento
+            currentAgendamentos[key] = bookingData;
+        } else {
+            failedBookings.push(`${formatDateToBR(date)} às ${hour} (erro ao agendar)`);
+        }
+        await new Promise(resolve => setTimeout(resolve, 300)); // Pequena pausa para o Apps Script
+    }
+
+    let message = '';
+    if (successfulBookings.length > 0) {
+        message += `Agendamento(s) realizado(s) com sucesso para ${selectedCollaborator}:\n${successfulBookings.join('\n')}\n\n`;
+    }
+    if (failedBookings.length > 0) {
+        message += `Erro ao agendar os seguintes horários:\n${failedBookings.join('\n')}\n(Podem já ter sido agendados por outra pessoa ou houve um problema)`;
+    }
+    if (message) {
+        alert(message);
+    } else {
+        alert('Nenhum agendamento foi realizado.');
+    }
+    
     clearForm();
     resetAgendamentoView(); // Go back to collaborator selection
 }
@@ -892,35 +1031,22 @@ currentAgendamentos = await DataManager.getAgendamentos();
 function clearForm() {
     const form = document.getElementById('form');
     form.style.display = 'none';
-    form.reset_ = () => { // Add a reset method for convenience
-        document.getElementById('nome').value = '';
-        document.getElementById('empreendimento').value = '';
-        document.getElementById('local').value = '';
-        document.getElementById('telefone').value = '';
-        document.getElementById('observacoes').value = '';
-    }
-    form.reset_();
+    document.getElementById('nome').value = '';
+    document.getElementById('empreendimento').value = '';
+    document.getElementById('local').value = '';
+    document.getElementById('telefone').value = '';
+    document.getElementById('observacoes').value = '';
+    selectedHours = []; // Limpa horários selecionados
 }
 
 
 function cancelForm() {
     clearForm();
-    // Determine where to go back to (day view or week view)
-    // This is simplified; ideally, track the previous state.
-    // For now, just go back to the selector view or a sensible default.
-    if(selectedDate){ // if a date was selected, user was likely in day or week view
-        // Heuristics: if calendar is hidden and weekview is hidden, but dayhours was likely shown
-        // This logic could be improved by storing the previous view explicitly
-        if(document.getElementById('calendar').classList.contains('hidden') && 
-           document.getElementById('weekView').classList.contains('hidden')) {
-            openDay(selectedDate); // Try to go back to day view
-        } else if (!document.getElementById('weekView').classList.contains('hidden')) {
-            showWeek();
-        } else {
-            showMonth(); // Default fallback if month view was visible
-        }
+    // Volta para a view anterior (dia ou semana)
+    if (!document.getElementById('weekView').classList.contains('hidden')) {
+        showWeek();
     } else {
-       goBack(); // General back function
+        openDay(selectedDate); // Reabre o dia
     }
 }
 
@@ -929,6 +1055,8 @@ function clearScreensAndForm() {
     document.getElementById('calendar').classList.add('hidden');
     document.getElementById('dayHours').classList.add('hidden');
     document.getElementById('weekView').classList.add('hidden');
+    document.getElementById('dayHoursActionButtons').innerHTML = ''; // Limpa botões de ação
+    document.getElementById('weekViewActionButtons').innerHTML = ''; // Limpa botões de ação
     clearForm();
 }
 
@@ -986,7 +1114,7 @@ function renderTable(dados) {
             <td>${item.telefone || '-'}</td>
             <td>${item.observacoes || '-'}</td>
             <td>
-                <button class="action-btn" onclick="removeAgendamento('${item.key}')">
+                <button class="action-btn" onclick="removeAgendamento('${item.colaborador}_${item.data}_${item.horario}')">
                     Excluir
                 </button>
             </td>
@@ -1046,8 +1174,7 @@ async function updateStats() {
         `;
         statsContainer.appendChild(statCard);
     });
-     if (Object.keys(agendamentosPorColaborador).length === 0 && totalAgendamentos > 0) {
-        // This case should not happen if data is consistent, but as a fallback
+      if (Object.keys(agendamentosPorColaborador).length === 0 && totalAgendamentos > 0) {
         statsContainer.innerHTML += `<div class="stat-card"><div class="stat-label">Nenhum colaborador com agendamentos.</div></div>`;
     }
 }
@@ -1056,9 +1183,20 @@ async function updateStats() {
 async function removeAgendamento(key) {
     if (confirm('Tem certeza que deseja excluir este agendamento?')) {
         await DataManager.removeAgendamento(key);
-        await loadReports(); // Reload reports which also updates stats
+        // Espera um pouco para a planilha processar a remoção
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        currentAgendamentos = await DataManager.getAgendamentos(); // Atualiza o cache
+        await loadReports(); // Recarrega relatórios
         alert('Agendamento excluído com sucesso!');
     }
+}
+
+async function clearAllData() {
+    await DataManager.clearAllData();
+    // Após limpar, atualiza a interface
+    currentAgendamentos = await DataManager.getAgendamentos();
+    await loadReports();
+    resetAgendamentoView();
 }
 
 async function exportToCSV() {
@@ -1089,12 +1227,6 @@ async function exportToCSV() {
 
 function exportToPDF() {
     alert('Funcionalidade de exportação para PDF ainda não implementada. Considere usar a impressão do navegador (Ctrl+P) e "Salvar como PDF" ou uma biblioteca como jsPDF para uma solução mais robusta.');
-    // Para uma implementação real, você usaria uma biblioteca como jsPDF:
-    // const { jsPDF } = window.jspdf; (depois de incluir a lib)
-    // const doc = new jsPDF();
-    // doc.text("Relatório de Agendamentos", 10, 10);
-    // // ... adicionar dados da tabela ...
-    // doc.save("agendamentos.pdf");
 }
 
 function downloadFile(content, filename, contentType) {
@@ -1114,13 +1246,6 @@ function formatDateToBR(dateStr) { // YYYY-MM-DD to DD/MM/YYYY
     const [year, month, day] = dateStr.split('-');
     return `${day}/${month}/${year}`;
 }
-
-function formatDateToISO(dateStr) { // DD/MM/YYYY to YYYY-MM-DD
-    if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return dateStr;
-    const [day, month, year] = dateStr.split('/');
-    return `${year}-${month}-${day}`;
-}
-
 
 // Inicializar ao carregar a página
 document.addEventListener('DOMContentLoaded', initializeApp);
