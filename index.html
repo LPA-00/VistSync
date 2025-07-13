@@ -8,220 +8,198 @@
         :root {
             --verde-principal: rgb(52, 69, 55);
             --verde-claro: rgb(72, 95, 75);
-            --branco: #f5f5f5;
-            --cinza: #e0e0e0;
-            --vermelho: #e74c3c;
-            --azul: #3498db;
-            --laranja: #e67e22; /* Nova cor para horário selecionado */
+            --branco: 
+#f5f5f5;
+            --cinza: 
+#e0e0e0;
+            --vermelho: 
+#e74c3c;
+            --azul: 
+#3498db;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; } /* Added asterisk for global reset */
 
         body {
-            background-color: var(--branco);
-            font-family: Arial, sans-serif;
-            color: var(--verde-principal);
-            padding: 20px;
+          background-color: var(--branco);
+          font-family: Arial, sans-serif;
+          color: var(--verde-principal);
+          padding: 20px;
         }
 
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 0 20px;
-            flex-wrap: wrap;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 30px;
+          padding: 0 20px;
+          flex-wrap: wrap; /* Allow wrapping for smaller screens */
         }
 
         .header h1 {
-            margin-bottom: 10px;
+            margin-bottom: 10px; /* Adjust margin for h1 in header */
         }
 
         .nav-buttons {
-            display: flex;
-            gap: 10px;
+          display: flex;
+          gap: 10px;
         }
 
         .nav-btn {
-            background-color: var(--azul);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+          background-color: var(--azul);
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s;
         }
 
         .nav-btn:hover {
-            background-color: #2980b9;
+          background-color: 
+#2980b9;
         }
 
         .nav-btn.active {
-            background-color: var(--verde-principal);
+          background-color: var(--verde-principal);
         }
 
         h1, h2 { text-align: center; margin-bottom: 20px; }
 
         .card-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          flex-wrap: wrap;
         }
 
         .card {
-            background-color: var(--verde-principal);
-            color: var(--branco);
-            padding: 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            width: 180px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
+          background-color: var(--verde-principal);
+          color: var(--branco);
+          padding: 20px;
+          border-radius: 12px;
+          cursor: pointer;
+          width: 180px;
+          text-align: center;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          transition: transform 0.3s;
         }
 
         .card:hover { transform: scale(1.05); }
 
-        .hidden { display: none !important; }
+        .hidden { display: none !important; } /* Added !important for stronger override */
 
         .selector, .back-button { margin-top: 20px; text-align: center; }
 
         .selector button, .back-button button {
-            background-color: var(--verde-claro);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 5px;
+          background-color: var(--verde-claro);
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 8px;
+          cursor: pointer;
+          margin: 5px;
         }
 
         .selector button:hover, .back-button button:hover {
-            background-color: var(--verde-principal);
+          background-color: var(--verde-principal);
         }
 
         .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            max-width: 700px;
-            margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 10px;
+          max-width: 700px; /* Limit calendar width */
+          margin: 0 auto; /* Center calendar */
         }
 
         .header-cell {
-            font-weight: bold;
-            text-align: center;
-            padding: 10px 0;
+          font-weight: bold;
+          text-align: center;
+          padding: 10px 0;
         }
 
         .day-card {
-            background-color: var(--cinza);
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+          background-color: var(--cinza);
+          padding: 15px;
+          border-radius: 8px;
+          cursor: pointer;
+          text-align: center;
+          position: relative;
+          min-height: 50px; /* Ensure consistent height */
+          display: flex; /* For centering content */
+          align-items: center; /* For centering content */
+          justify-content: center; /* For centering content */
         }
 
         .day-card:hover {
-            background-color: var(--verde-claro);
-            color: white;
+          background-color: var(--verde-claro);
+          color: white;
         }
 
         .icon-red {
-            color: var(--vermelho);
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: 18px;
+          color: var(--vermelho);
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          font-size: 18px;
         }
         
-        .day-hours-container {
+        .day-hours-container { /* Wrapper for day hours for better layout */
             display: flex;
-            flex-direction: column; /* Changed to column for better stacking */
+            flex-direction: column;
             align-items: center;
             gap: 10px;
-            margin-bottom: 20px; /* Space before action buttons */
         }
 
         .hour {
-            background-color: var(--cinza);
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            margin: 5px;
-            min-width: 80px;
+          background-color: var(--cinza);
+          padding: 10px;
+          border-radius: 8px;
+          cursor: pointer;
+          text-align: center;
+          margin: 5px;
+          min-width: 80px;
         }
 
         .hour:hover {
-            background-color: var(--verde-claro);
-            color: white;
+          background-color: var(--verde-claro);
+          color: white;
         }
-
-        .hour.selected { /* Estilo para horário selecionado */
-            background-color: var(--laranja);
-            color: white;
-            border: 2px solid #d35400;
-        }
-
-        .action-buttons { /* Novo estilo para o contêiner dos botões de ação */
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .action-buttons button {
-            background-color: var(--verde-principal);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 5px;
-        }
-        .action-buttons button:hover {
-            background-color: var(--verde-claro);
-        }
-
 
         .form {
-            margin-top: 20px;
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: var(--cinza);
-            padding: 20px;
-            border-radius: 12px;
+          margin-top: 20px;
+          display: none; /* Initially hidden, controlled by JS */
+          flex-direction: column;
+          gap: 10px;
+          max-width: 400px;
+          margin-left: auto;
+          margin-right: auto;
+          background-color: var(--cinza);
+          padding: 20px;
+          border-radius: 12px;
         }
 
         .form input, .form textarea {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-family: inherit;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          font-family: inherit;
         }
 
         .form button {
-            background-color: var(--verde-principal);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
+          background-color: var(--verde-principal);
+          color: white;
+          border: none;
+          padding: 10px;
+          border-radius: 8px;
+          cursor: pointer;
         }
 
         .form button:hover {
-            background-color: var(--verde-claro);
+          background-color: var(--verde-claro);
         }
-        .form button[type="button"] {
+        .form button[type="button"] { /* Style for cancel button */
             background-color: var(--vermelho);
         }
         .form button[type="button"]:hover {
@@ -230,172 +208,179 @@
 
 
         .no-available {
-            color: var(--vermelho);
-            text-align: center;
-            margin-top: 10px;
-            font-style: italic;
+          color: var(--vermelho);
+          text-align: center;
+          margin-top: 10px;
+          font-style: italic;
         }
 
         .week-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr); /* Mon-Fri */
+          gap: 10px;
+          margin-top: 20px;
+          max-width: 800px; /* Limit width */
+          margin-left: auto;
+          margin-right: auto;
         }
 
-        .week-grid > div {
+        .week-grid > div { /* Column in week grid */
             background-color: #f9f9f9;
             padding: 10px;
             border-radius: 8px;
             border: 1px solid var(--cinza);
         }
 
+
         /* Estilos para relatórios */
         .report-container {
-            max-width: 1200px;
-            margin: 0 auto;
+          max-width: 1200px;
+          margin: 0 auto;
         }
 
         .filter-section {
-            background-color: var(--cinza);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+          background-color: var(--cinza);
+          padding: 20px;
+          border-radius: 12px;
+          margin-bottom: 20px;
         }
 
         .filter-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            align-items: end;
+          display: flex;
+          gap: 15px;
+          margin-bottom: 15px;
+          flex-wrap: wrap;
+          align-items: end;
         }
 
         .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
         }
 
         .filter-group label {
-            font-weight: bold;
-            font-size: 14px;
+          font-weight: bold;
+          font-size: 14px;
         }
 
         .filter-group input, .filter-group select {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            min-width: 150px;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          min-width: 150px;
         }
 
         .export-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 20px 0;
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+          margin: 20px 0;
         }
 
         .export-btn {
-            background-color: var(--azul);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
+          background-color: var(--azul);
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 8px;
+          cursor: pointer;
         }
 
         .export-btn:hover {
-            background-color: #2980b9;
+          background-color: 
+#2980b9;
         }
 
         .table-container {
-            overflow-x: auto;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          overflow-x: auto;
+          background-color: white;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         table {
-            width: 100%;
-            border-collapse: collapse;
+          width: 100%;
+          border-collapse: collapse;
         }
 
         th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+          padding: 12px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
         }
 
         th {
-            background-color: var(--verde-principal);
-            color: white;
-            font-weight: bold;
-            position: sticky;
-            top: 0;
+          background-color: var(--verde-principal);
+          color: white;
+          font-weight: bold;
+          position: sticky; /* Make table headers sticky */
+          top: 0;
         }
 
         tr:hover {
-            background-color: #f8f9fa;
+          background-color: 
+#f8f9fa;
         }
 
         .status-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          font-weight: bold;
         }
 
         .status-agendado {
-            background-color: #e8f5e8;
-            color: #2d5016;
+          background-color: 
+#e8f5e8;
+          color: 
+#2d5016;
         }
 
         .action-btn {
-            background-color: var(--vermelho);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
+          background-color: var(--vermelho);
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 12px;
         }
 
         .action-btn:hover {
-            background-color: #c0392b;
+          background-color: 
+#c0392b;
         }
 
         .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+          margin-bottom: 30px;
         }
 
         .stat-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          background-color: white;
+          padding: 20px;
+          border-radius: 12px;
+          text-align: center;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .stat-number {
-            font-size: 2em;
-            font-weight: bold;
-            color: var(--verde-principal);
+          font-size: 2em;
+          font-weight: bold;
+          color: var(--verde-principal);
         }
 
         .stat-label {
-            color: #666;
-            margin-top: 5px;
+          color: #666;
+          margin-top: 5px;
         }
     </style>
 </head>
 <body>
+	<div id="mensagem-global" style="text-align:center; margin-top:10px;"></div>
     <div class="header">
         <h1>Sistema de Agendamento de Vistorias</h1>
         <div class="nav-buttons">
@@ -404,9 +389,22 @@
         </div>
     </div>
 
+    <!-- Seção de Agendamento -->
     <div id="section-agendamento">
         <div class="card-container" id="collaborators">
-            </div>
+            <!-- Colaboradores serão carregados aqui se necessário, ou estáticos como abaixo -->
+            <div class="card" onclick="selectCollaborator('Cleber')">Cleber</div>
+            <div class="card" onclick="selectCollaborator('Devilson')">Devilson</div>
+            <!-- Adicionar mais colaboradores aqui se necessário -->
+        </div>
+		
+		<div style="text-align: center; margin-top: 20px;">
+		  <input type="text" id="colaboradorPersonalizado" placeholder="Digite outro nome" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 200px;" onkeydown="if(event.key==='Enter') setCustomCollaborator()" />
+		  <button onclick="setCustomCollaborator()" style="padding: 10px 20px; border-radius: 8px; background-color: var(--verde-principal); color: white; border: none; cursor: pointer; margin-left: 10px;">
+			Usar
+		  </button>
+		</div>
+
 
         <div class="selector hidden" id="selector">
             <h2 id="selectedCollaborator"></h2>
@@ -419,16 +417,15 @@
         </div>
 
         <div class="calendar hidden" id="calendar">
-            </div>
+            <!-- Calendário Mês será gerado aqui -->
+        </div>
 
         <div class="day-hours hidden" id="dayHours">
-             <div class="action-buttons" id="dayHoursActionButtons">
-                 </div>
+             <!-- Horários do Dia serão gerados aqui -->
         </div>
         
         <div class="week-view hidden" id="weekView">
-            <div class="action-buttons" id="weekViewActionButtons">
-                 </div>
+            <!-- Visualização Semanal será gerada aqui -->
         </div>
 
         <div class="form" id="form">
@@ -443,6 +440,7 @@
         </div>
     </div>
 
+    <!-- Seção de Relatórios -->
     <div id="section-relatorios" class="hidden">
         <div class="report-container">
             <div class="filter-section">
@@ -452,7 +450,10 @@
                         <label for="filter-colaborador">Colaborador:</label>
                         <select id="filter-colaborador">
                             <option value="">Todos</option>
-                            </select>
+                            <option value="Cleber">Cleber</option>
+                            <option value="Devilson">Devilson</option>
+                            <!-- Adicionar mais colaboradores aqui se necessário -->
+                        </select>
                     </div>
                     <div class="filter-group">
                         <label for="filter-data-inicio">Data Inicial:</label>
@@ -467,14 +468,15 @@
                         <input type="text" id="filter-empreendimento" placeholder="Filtrar por empreendimento">
                     </div>
                     <div class="filter-group">
-                        <label> </label>
+                        <label> </label>
                         <button class="nav-btn" onclick="applyFilters()">Filtrar</button>
                     </div>
                 </div>
             </div>
 
             <div class="stats-container" id="stats-container">
-                </div>
+                <!-- Estatísticas serão inseridas aqui -->
+            </div>
 
             <div class="export-buttons">
                 <button class="export-btn" onclick="exportToCSV()">Exportar CSV</button>
@@ -498,7 +500,8 @@
                         </tr>
                     </thead>
                     <tbody id="reports-tbody">
-                        </tbody>
+                        <!-- Dados serão inseridos aqui -->
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -506,16 +509,18 @@
 
 <script>
 const horarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
-// Adicione ou remova colaboradores aqui para que apareçam na tela e no filtro
-const colaboradores = ["Cleber", "Devilson", "Mariana"]; 
 let currentAgendamentos = {}; // Local cache of agendamentos
 let selectedCollaborator = '';
 let selectedDate = ''; // Format: YYYY-MM-DD
-let selectedHours = []; // Array para múltiplos horários { date: 'YYYY-MM-DD', hour: 'HH:mm', element: HTMLDivElement }
+let selectedHour = '';
 
-const STORAGE_KEY = 'vistoriasAgendamentos'; // Mantido por compatibilidade, mas não usado diretamente para a planilha
+const STORAGE_KEY = 'vistoriasAgendamentos';
 
 // --- DataManager START ---
+// Simulates an API or a more complex data storage mechanism.
+// For GitHub Pages without a backend, localStorage is the simplest persistent option (per browser).
+// To make this a truly shared database, you'd replace localStorage calls with API calls (fetch)
+// to a backend service (e.g., Firebase, Supabase, custom API).
 class DataManager {
     static async getAgendamentos() {
         try {
@@ -553,115 +558,23 @@ class DataManager {
             return dateA - dateB;
         });
     }
-
-    static async addAgendamento(data) {
-        try {
-            const response = await fetch(
-                'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
-                {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }
-            );
-            console.log('Agendamento enviado para a planilha.');
-            return { success: true };
-        } catch (err) {
-            console.error('Falha ao enviar para a planilha:', err);
-            return { success: false, error: err.message };
-        }
-    }
-
-    static async removeAgendamento(key) {
-        if (!key) {
-            console.error("Chave de agendamento inválida para remoção.");
-            return { success: false, error: "Chave inválida" };
-        }
-        try {
-            const response = await fetch(
-                'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
-                {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ action: 'delete', key: key })
-                }
-            );
-            console.log('Solicitação de exclusão enviada.');
-            return { success: true };
-        } catch (err) {
-            console.error('Falha ao enviar solicitação de exclusão para a planilha:', err);
-            return { success: false, error: err.message };
-        }
-    }
-
-    static async clearAllData() {
-        if (confirm('ATENÇÃO: Tem certeza que deseja limpar TODOS os dados de agendamento? Esta ação é irreversível!')) {
-            try {
-                const response = await fetch(
-                    'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
-                    {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ action: 'clearAll' })
-                    }
-                );
-                alert('Todos os dados foram solicitados para exclusão. A planilha será esvaziada em breve.');
-                currentAgendamentos = {};
-                await loadReports();
-                resetAgendamentoView();
-            } catch (error) {
-                console.error("Erro ao tentar limpar todos os dados:", error);
-                alert("Ocorreu um erro ao tentar limpar os dados. Verifique o console para mais detalhes.");
-            }
-        }
-    }
 }
+
 // --- DataManager END ---
 
 async function initializeApp() {
-    await renderCollaboratorCards(); // Carrega os cards de colaboradores ao iniciar
-    await populateFilterCollaborators(); // Popula o filtro de colaboradores
     currentAgendamentos = await DataManager.getAgendamentos();
+
+    // Inicializa os filtros com data de hoje
     const today = new Date().toISOString().split('T')[0];
     const dataInicioFilter = document.getElementById('filter-data-inicio');
     const dataFimFilter = document.getElementById('filter-data-fim');
     if (!dataInicioFilter.value) dataInicioFilter.value = today;
     if (!dataFimFilter.value) dataFimFilter.value = today;
-    
-    showSection('agendamento'); // Default section
+
+    // ❌ Removido: showSection('agendamento');
 }
 
-async function renderCollaboratorCards() {
-    const container = document.getElementById('collaborators');
-    container.innerHTML = ''; // Limpa os cards existentes
-    colaboradores.forEach(colaborador => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerText = colaborador;
-        card.onclick = () => selectCollaborator(colaborador);
-        container.appendChild(card);
-    });
-}
-
-async function populateFilterCollaborators() {
-    const select = document.getElementById('filter-colaborador');
-    select.innerHTML = '<option value="">Todos</option>'; // Opção padrão
-    colaboradores.forEach(colaborador => {
-        const option = document.createElement('option');
-        option.value = colaborador;
-        option.innerText = colaborador;
-        select.appendChild(option);
-    });
-}
 
 async function showSection(section) {
     document.getElementById('section-agendamento').classList.add('hidden');
@@ -677,10 +590,11 @@ async function showSection(section) {
     if (section === 'relatorios') {
         await loadReports();
     } else {
-        currentAgendamentos = await DataManager.getAgendamentos(); 
+        currentAgendamentos = await DataManager.getAgendamentos(); // 🔥 atualiza os agendamentos direto da planilha
         resetAgendamentoView();
     }
 }
+
 
 function resetAgendamentoView() {
     clearScreensAndForm();
@@ -689,8 +603,20 @@ function resetAgendamentoView() {
     document.getElementById('backButton').classList.add('hidden');
     selectedCollaborator = '';
     selectedDate = '';
-    selectedHours = []; 
-    updateConfirmButtonVisibility(); // Garante que botões de confirmar estejam ocultos
+    selectedHour = '';
+}
+
+function setCustomCollaborator() {
+  const input = document.getElementById('colaboradorPersonalizado');
+  const nome = input.value.trim();
+
+  if (!nome) {
+    alert('Digite o nome de um colaborador.');
+    return;
+  }
+
+  input.value = ''; // limpa o campo
+  selectCollaborator(nome); // usa a função existente
 }
 
 function selectCollaborator(nome) {
@@ -698,41 +624,42 @@ function selectCollaborator(nome) {
     document.getElementById('collaborators').classList.add('hidden');
     document.getElementById('selector').classList.remove('hidden');
     document.getElementById('selectedCollaborator').innerText = `Agendar para: ${nome}`;
-    document.getElementById('backButton').classList.remove('hidden');
-    // Não chame showWeek/showMonth aqui, deixe o usuário escolher
+    document.getElementById('backButton').classList.remove('hidden'); // Show back button to select collaborator
+    // Default to week view or let user choose
 }
 
-function goBack() {
+function goBack() { // Main back button logic
     const form = document.getElementById('form');
     const dayHours = document.getElementById('dayHours');
     const calendar = document.getElementById('calendar');
     const weekView = document.getElementById('weekView');
     const selector = document.getElementById('selector');
 
-    if (form.style.display === 'flex') {
-        cancelForm(); 
-    } else if (!dayHours.classList.contains('hidden')) {
+    if (form.style.display === 'flex') { // If form is visible, go back to day/week view
+        cancelForm();
+        if (selectedDate && selectedHour) { // implies we came from day view or week view
+             // Re-show the previous view (day or week)
+            if (document.getElementById('calendar').classList.contains('hidden')) { // came from week
+                showWeek();
+            } else { // came from month > day
+                openDay(selectedDate);
+            }
+        }
+    } else if (!dayHours.classList.contains('hidden')) { // If dayHours is visible, go back to month calendar
         showMonth();
-        selectedHours = [];
-        updateConfirmButtonVisibility();
-    } else if (!weekView.classList.contains('hidden')) {
+    } else if (!calendar.classList.contains('hidden') || !weekView.classList.contains('hidden')) { // If calendar or weekView is visible, go to selector
         clearScreensAndForm();
         selector.classList.remove('hidden');
-        selectedHours = [];
-        updateConfirmButtonVisibility();
-    } else if (!calendar.classList.contains('hidden')) {
-        clearScreensAndForm();
-        selector.classList.remove('hidden');
-    } else if (!selector.classList.contains('hidden')) {
+        document.getElementById('backButton').classList.remove('hidden'); // Keep back button to go to collaborators
+    } else if (!selector.classList.contains('hidden')) { // If selector is visible, go to collaborators
         resetAgendamentoView();
     }
 }
 
+
 async function showMonth() {
     clearScreensAndForm();
-    currentAgendamentos = await DataManager.getAgendamentos();
-    selectedHours = []; 
-    updateConfirmButtonVisibility();
+    currentAgendamentos = await DataManager.getAgendamentos(); // 🔥 garante dados atualizados
 
     const calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = '';
@@ -741,7 +668,7 @@ async function showMonth() {
 
     const today = new Date();
     const year = today.getFullYear();
-    const month = today.getMonth();
+    const month = today.getMonth(); // 0-indexed
 
     const monthName = today.toLocaleString('pt-BR', { month: 'long' });
     calendarEl.innerHTML = `<h2>${monthName.charAt(0).toUpperCase() + monthName.slice(1)} / ${year}</h2>`;
@@ -781,11 +708,10 @@ async function showMonth() {
     calendarEl.appendChild(grid);
 }
 
+
 async function showWeek() {
     clearScreensAndForm();
-    currentAgendamentos = await DataManager.getAgendamentos();
-    selectedHours = []; 
-    updateConfirmButtonVisibility();
+    currentAgendamentos = await DataManager.getAgendamentos(); // 🔥 garante dados atualizados
 
     const weekViewEl = document.getElementById('weekView');
     weekViewEl.innerHTML = '<h2>Próximos 5 Dias Úteis</h2>';
@@ -828,7 +754,7 @@ async function showWeek() {
                 const btn = document.createElement('div');
                 btn.className = 'hour';
                 btn.innerText = hora;
-                btn.onclick = () => toggleHourSelection(day.dateStr, hora, btn);
+                btn.onclick = () => selectHourAndShowForm(day.dateStr, hora);
                 column.appendChild(btn);
             }
         });
@@ -842,34 +768,29 @@ async function showWeek() {
         grid.appendChild(column);
     });
     weekViewEl.appendChild(grid);
-
-    // Adiciona o botão de confirmar agendamento para a semana
-    renderConfirmButton('week');
 }
 
-function openDay(dateStr) {
-    clearScreensAndForm();
-    selectedDate = dateStr; 
-    selectedHours = []; 
-    updateConfirmButtonVisibility();
 
+
+function openDay(dateStr) { // dateStr format YYYY-MM-DD
+    clearScreensAndForm();
     const dayHoursEl = document.getElementById('dayHours');
-    dayHoursEl.innerHTML = '';
+    dayHoursEl.innerHTML = ''; // Clear previous content
     dayHoursEl.classList.remove('hidden');
     document.getElementById('backButton').classList.remove('hidden');
 
     const formattedDate = formatDateToBR(dateStr);
     dayHoursEl.innerHTML = `<h2>Horários para ${formattedDate}</h2>`;
     
-    const container = document.createElement('div');
+    const container = document.createElement('div'); // For flex layout of hours
     container.className = 'day-hours-container';
 
     let available = false;
     if (new Date(dateStr) < new Date(new Date().toDateString())) {
-        const pastDateMsg = document.createElement('div');
-        pastDateMsg.className = 'no-available';
-        pastDateMsg.innerText = 'Não é possível agendar em datas passadas.';
-        container.appendChild(pastDateMsg);
+         const pastDateMsg = document.createElement('div');
+         pastDateMsg.className = 'no-available';
+         pastDateMsg.innerText = 'Não é possível agendar em datas passadas.';
+         container.appendChild(pastDateMsg);
     } else {
         horarios.forEach(hora => {
             const key = `${selectedCollaborator}_${dateStr}_${hora}`;
@@ -878,11 +799,12 @@ function openDay(dateStr) {
                 const hourBtn = document.createElement('div');
                 hourBtn.className = 'hour';
                 hourBtn.innerText = hora;
-                hourBtn.onclick = () => toggleHourSelection(dateStr, hora, hourBtn);
+                hourBtn.onclick = () => selectHourAndShowForm(dateStr, hora);
                 container.appendChild(hourBtn);
             }
         });
     }
+
 
     if (!available && new Date(dateStr) >= new Date(new Date().toDateString())) {
         const noAvailable = document.createElement('div');
@@ -892,10 +814,9 @@ function openDay(dateStr) {
     }
     dayHoursEl.appendChild(container);
 
-    renderConfirmButton('day');
-
+    // Back button within openDay is specific to going back to month view
     const backBtnDiv = document.createElement('div');
-    backBtnDiv.className = 'back-button';
+    backBtnDiv.className = 'back-button'; // Use existing class for styling
     backBtnDiv.style.marginTop = '20px';
     const specificBackBtn = document.createElement('button');
     specificBackBtn.innerHTML = '⬅ Voltar para o Calendário Mensal';
@@ -904,63 +825,14 @@ function openDay(dateStr) {
     dayHoursEl.appendChild(backBtnDiv);
 }
 
-function toggleHourSelection(date, hour, element) {
-    const timeSlot = { date, hour, element }; // Store element reference
-    const index = selectedHours.findIndex(s => s.date === date && s.hour === hour);
 
-    if (index > -1) {
-        selectedHours.splice(index, 1);
-        element.classList.remove('selected');
-    } else {
-        selectedHours.push(timeSlot);
-        element.classList.add('selected');
-    }
-    updateConfirmButtonVisibility();
-}
-
-function updateConfirmButtonVisibility() {
-    const confirmButtonDay = document.querySelector('#dayHoursActionButtons button');
-    const confirmButtonWeek = document.querySelector('#weekViewActionButtons button');
-
-    if (confirmButtonDay) {
-        confirmButtonDay.style.display = selectedHours.length > 0 ? 'inline-block' : 'none';
-    }
-    if (confirmButtonWeek) {
-        confirmButtonWeek.style.display = selectedHours.length > 0 ? 'inline-block' : 'none';
-    }
-}
-
-function renderConfirmButton(view) {
-    const containerId = view === 'day' ? 'dayHoursActionButtons' : 'weekViewActionButtons';
-    const container = document.getElementById(containerId);
-    if (!container) return; // Safeguard if container is not found
-
-    // Only add button if it doesn't exist
-    if (!container.querySelector('button')) {
-        const confirmBtn = document.createElement('button');
-        confirmBtn.innerText = 'Confirmar Agendamento(s)';
-        confirmBtn.onclick = showForm;
-        confirmBtn.style.display = 'none'; // Esconde inicialmente
-        confirmBtn.style.marginTop = '20px'; // Adiciona um espaçamento
-        container.appendChild(confirmBtn);
-    }
-    updateConfirmButtonVisibility(); // Garante que a visibilidade seja atualizada
-}
-
-
-function showForm() {
-    if (selectedHours.length === 0) {
-        alert('Por favor, selecione ao menos um horário para agendar.');
-        return;
-    }
+function selectHourAndShowForm(date, hour) {
+    selectedDate = date; // YYYY-MM-DD
+    selectedHour = hour;
     document.getElementById('form').style.display = 'flex';
-    // Esconder todas as outras views de agendamento antes de mostrar o formulário
-    document.getElementById('dayHours').classList.add('hidden'); 
-    document.getElementById('weekView').classList.add('hidden'); 
-    document.getElementById('calendar').classList.add('hidden'); 
-    document.getElementById('selector').classList.add('hidden'); // Esconde também o selector (Semana/Mês)
-    document.getElementById('backButton').classList.remove('hidden'); // Mantenha o botão de voltar geral
-
+    document.getElementById('dayHours').classList.add('hidden'); // Hide day hours
+    document.getElementById('weekView').classList.add('hidden'); // Hide week view
+    document.getElementById('calendar').classList.add('hidden'); // Hide month calendar
     document.getElementById('nome').focus();
 }
 
@@ -970,144 +842,158 @@ async function book() {
     const local = document.getElementById('local').value.trim();
     const telefone = document.getElementById('telefone').value.trim();
     const observacoes = document.getElementById('observacoes').value.trim();
+    const agendarBtn = document.querySelector('#form button:not([type="button"])');
 
     if (!nome || !empreendimento || !local) {
         alert('Preencha os campos obrigatórios: Nome, Empreendimento e Local!');
         return;
     }
 
-    if (selectedHours.length === 0) {
-        alert('Nenhum horário selecionado para agendar. Por favor, selecione um horário.');
+    agendarBtn.disabled = true;
+    agendarBtn.innerText = 'Agendando...';
+
+    const key = `${selectedCollaborator}_${selectedDate}_${selectedHour}`;
+
+    // Verifica se o horário ainda está disponível
+    const agendamentosAtualizados = await DataManager.getAgendamentos();
+    if (agendamentosAtualizados[key]) {
+        alert('⚠️ Este horário acabou de ser preenchido por outro usuário. Atualizando os dados...');
+        currentAgendamentos = agendamentosAtualizados;
+        agendarBtn.disabled = false;
+        agendarBtn.innerText = 'Agendar';
         return;
     }
 
-    const successfulBookings = [];
-    const failedBookings = [];
-
-    // Desabilitar o formulário enquanto os agendamentos são processados
-    document.getElementById('form').querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
-
-    for (const slot of selectedHours) {
-        const { date, hour, element } = slot;
-        const bookingData = {
-            nome,
-            empreendimento,
-            local,
-            telefone,
-            observacoes,
-            colaborador: selectedCollaborator,
-            dataAgendada: date,
-            horaAgendada: hour
-        };
-
-        const key = `${selectedCollaborator}_${date}_${hour}`;
-        if (currentAgendamentos[key]) {
-            failedBookings.push(`${formatDateToBR(date)} às ${hour} (já agendado por outro)`);
-            if (element) element.classList.remove('selected'); // Desmarca visualmente
-            continue;
-        }
-
-        const result = await DataManager.addAgendamento(bookingData);
-        if (result.success) {
-            successfulBookings.push(`${formatDateToBR(date)} às ${hour}`);
-            currentAgendamentos[key] = bookingData; // Atualiza o cache local
-            if (element) element.classList.remove('selected'); // Desmarca visualmente
-        } else {
-            failedBookings.push(`${formatDateToBR(date)} às ${hour} (erro ao agendar)`);
-            if (element) element.classList.remove('selected'); // Desmarca visualmente
-        }
-        await new Promise(resolve => setTimeout(resolve, 300));
+    // Envia para o Google Sheets
+    try {
+        await fetch(
+            'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec',
+            {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome,
+                    empreendimento,
+                    local,
+                    telefone,
+                    observacoes,
+                    colaborador: selectedCollaborator,
+                    dataAgendada: selectedDate,
+                    horaAgendada: selectedHour
+                })
+            }
+        );
+    } catch (err) {
+        console.error('Erro ao enviar para a planilha:', err);
+        alert('❌ Erro ao enviar para a planilha!');
+        agendarBtn.disabled = false;
+        agendarBtn.innerText = 'Agendar';
+        return;
     }
 
-    // Reabilitar o formulário
-    document.getElementById('form').querySelectorAll('input, textarea, button').forEach(el => el.disabled = false);
+    // Aguarda atualização e busca os dados novamente
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    currentAgendamentos = await DataManager.getAgendamentos();
 
-    let message = '';
-    if (successfulBookings.length > 0) {
-        message += `Agendamento(s) realizado(s) com sucesso para ${selectedCollaborator}:\n${successfulBookings.join('\n')}\n\n`;
-    }
-    if (failedBookings.length > 0) {
-        message += `Erro ao agendar os seguintes horários:\n${failedBookings.join('\n')}\n(Podem já ter sido agendados por outra pessoa ou houve um problema)`;
-    }
-    if (message) {
-        alert(message);
-    } else {
-        alert('Nenhum agendamento foi realizado.');
-    }
-    
-    clearForm();
-    resetAgendamentoView();
+    // Exibe mensagem global de sucesso
+    const msgEl = document.getElementById('mensagem-global');
+    msgEl.innerText = `✅ Agendamento feito com sucesso para ${formatDateToBR(selectedDate)} às ${selectedHour}`;
+    msgEl.style.color = 'green';
+
+    agendarBtn.disabled = false;
+    agendarBtn.innerText = 'Agendar';
+
+    // Aguarda 4 segundos antes de limpar
+    setTimeout(() => {
+        msgEl.innerText = '';
+        clearForm();
+        resetAgendamentoView();
+    }, 2000);
 }
+
+
 
 function clearForm() {
     const form = document.getElementById('form');
     form.style.display = 'none';
-    document.getElementById('nome').value = '';
-    document.getElementById('empreendimento').value = '';
-    document.getElementById('local').value = '';
-    document.getElementById('telefone').value = '';
-    document.getElementById('observacoes').value = '';
-    selectedHours = []; // Limpa horários selecionados
-    // Garante que os elementos visuais dos horários também sejam desmarcados
-    document.querySelectorAll('.hour.selected').forEach(el => el.classList.remove('selected'));
-    updateConfirmButtonVisibility(); // Oculta o botão de confirmar se não há horários
+    form.reset_ = () => { // Add a reset method for convenience
+        document.getElementById('nome').value = '';
+        document.getElementById('empreendimento').value = '';
+        document.getElementById('local').value = '';
+        document.getElementById('telefone').value = '';
+        document.getElementById('observacoes').value = '';
+    }
+    form.reset_();
 }
+
 
 function cancelForm() {
     clearForm();
-    // Tenta voltar para a visualização anterior de forma inteligente
-    if (selectedDate) { // Se uma data estava selecionada, tenta voltar para o dia
-        openDay(selectedDate);
-    } else if (selectedCollaborator) { // Se um colaborador estava selecionado, mas nenhuma data, volta para o selector
-        clearScreensAndForm();
-        document.getElementById('selector').classList.remove('hidden');
-        document.getElementById('backButton').classList.remove('hidden');
-    } else { // Caso contrário, volta para a seleção de colaborador
-        resetAgendamentoView();
+    // Determine where to go back to (day view or week view)
+    // This is simplified; ideally, track the previous state.
+    // For now, just go back to the selector view or a sensible default.
+    if(selectedDate){ // if a date was selected, user was likely in day or week view
+        // Heuristics: if calendar is hidden and weekview is hidden, but dayhours was likely shown
+        // This logic could be improved by storing the previous view explicitly
+        if(document.getElementById('calendar').classList.contains('hidden') && 
+           document.getElementById('weekView').classList.contains('hidden')) {
+            openDay(selectedDate); // Try to go back to day view
+        } else if (!document.getElementById('weekView').classList.contains('hidden')) {
+            showWeek();
+        } else {
+            showMonth(); // Default fallback if month view was visible
+        }
+    } else {
+       goBack(); // General back function
     }
 }
+
 
 function clearScreensAndForm() {
     document.getElementById('calendar').classList.add('hidden');
     document.getElementById('dayHours').classList.add('hidden');
     document.getElementById('weekView').classList.add('hidden');
-    // Certifique-se de limpar os botões de ação também
-    document.getElementById('dayHoursActionButtons').innerHTML = '';
-    document.getElementById('weekViewActionButtons').innerHTML = '';
-    clearForm(); // Isso também limpa selectedHours e desmarca elementos visuais
+    clearForm();
 }
 
 // --- Funções de Relatório ---
 async function loadReports() {
-    await applyFilters();
+    await applyFilters(); // This will fetch and render
     await updateStats();
 }
 
 async function applyFilters() {
-    const colaboradorFilter = document.getElementById('filter-colaborador').value;
-    let dataInicioFilter = document.getElementById('filter-data-inicio').value;
-    let dataFimFilter = document.getElementById('filter-data-fim').value;
-    const empreendimentoFilter = document.getElementById('filter-empreendimento').value.toLowerCase();
-
     let dados = await DataManager.getAllAgendamentosArray();
 
-    dataInicioFilter = dataInicioFilter ? new Date(dataInicioFilter + 'T00:00:00Z') : null;
-    dataFimFilter = dataFimFilter ? new Date(dataFimFilter + 'T00:00:00Z') : null;
+    const colaboradorFilter = document.getElementById('filter-colaborador').value;
+    const dataInicioFilter = document.getElementById('filter-data-inicio').value;
+    const dataFimFilter = document.getElementById('filter-data-fim').value;
+    const empreendimentoFilter = document.getElementById('filter-empreendimento').value.toLowerCase();
 
-    if (colaboradorFilter) {
+    if (colaboradorFilter && colaboradorFilter !== 'Todos') {
         dados = dados.filter(item => item.colaborador === colaboradorFilter);
     }
+
     if (dataInicioFilter) {
-        dados = dados.filter(item => new Date(item.data + 'T00:00:00Z') >= dataInicioFilter);
+        dados = dados.filter(item => new Date(item.data) >= new Date(dataInicioFilter));
     }
+
     if (dataFimFilter) {
-        dados = dados.filter(item => new Date(item.data + 'T00:00:00Z') <= dataFimFilter);
+        dados = dados.filter(item => new Date(item.data) <= new Date(dataFimFilter));
     }
+
     if (empreendimentoFilter) {
         dados = dados.filter(item => item.empreendimento.toLowerCase().includes(empreendimentoFilter));
     }
+
     renderTable(dados);
+    console.log("📋 Dados filtrados:", dados);
 }
+
+
 
 function renderTable(dados) {
     const tbody = document.getElementById('reports-tbody');
@@ -1128,7 +1014,7 @@ function renderTable(dados) {
             <td>${item.telefone || '-'}</td>
             <td>${item.observacoes || '-'}</td>
             <td>
-                <button class="action-btn" onclick="removeAgendamento('${item.colaborador}_${item.data}_${item.horario}')">
+                <button class="action-btn" onclick="removeAgendamento('${item.key}')">
                     Excluir
                 </button>
             </td>
@@ -1140,20 +1026,21 @@ function renderTable(dados) {
 async function updateStats() {
     const dados = await DataManager.getAllAgendamentosArray();
     const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
+    const todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD for comparison
 
+    // Adjust startOfWeek and endOfWeek to be Monday to Sunday of the CURRENT week
     let startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1));
+    startOfWeek.setDate(today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1)); // Monday
     startOfWeek.setHours(0, 0, 0, 0);
 
     let endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday
     endOfWeek.setHours(23, 59, 59, 999);
     
     const totalAgendamentos = dados.length;
     const agendamentosHoje = dados.filter(item => item.data === todayStr).length;
     const agendamentosSemana = dados.filter(item => {
-        const itemDate = new Date(item.data + "T00:00:00");
+        const itemDate = new Date(item.data + "T00:00:00"); // Ensure comparison at start of day
         return itemDate >= startOfWeek && itemDate <= endOfWeek;
     }).length;
 
@@ -1177,6 +1064,7 @@ async function updateStats() {
             <div class="stat-label">Esta Semana (Seg-Dom)</div>
         </div>
     `;
+    // Add stats for each collaborator dynamically
     Object.entries(agendamentosPorColaborador).forEach(([colaborador, count]) => {
         const statCard = document.createElement('div');
         statCard.className = 'stat-card';
@@ -1186,26 +1074,19 @@ async function updateStats() {
         `;
         statsContainer.appendChild(statCard);
     });
-      if (Object.keys(agendamentosPorColaborador).length === 0 && totalAgendamentos > 0) {
+     if (Object.keys(agendamentosPorColaborador).length === 0 && totalAgendamentos > 0) {
+        // This case should not happen if data is consistent, but as a fallback
         statsContainer.innerHTML += `<div class="stat-card"><div class="stat-label">Nenhum colaborador com agendamentos.</div></div>`;
     }
 }
 
+
 async function removeAgendamento(key) {
     if (confirm('Tem certeza que deseja excluir este agendamento?')) {
         await DataManager.removeAgendamento(key);
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        currentAgendamentos = await DataManager.getAgendamentos();
-        await loadReports();
+        await loadReports(); // Reload reports which also updates stats
         alert('Agendamento excluído com sucesso!');
     }
-}
-
-async function clearAllData() {
-    await DataManager.clearAllData();
-    currentAgendamentos = await DataManager.getAgendamentos();
-    await loadReports();
-    resetAgendamentoView();
 }
 
 async function exportToCSV() {
@@ -1214,6 +1095,7 @@ async function exportToCSV() {
         alert('Não há dados para exportar!');
         return;
     }
+    // User request: Colaborador, Nome, empreendimento e local
     const headers = ['Colaborador', 'Nome Responsável', 'Empreendimento', 'Local', 'Data', 'Horário', 'Telefone', 'Observações'];
     
     const csvContent = [
@@ -1226,7 +1108,7 @@ async function exportToCSV() {
             formatDateToBR(item.data),
             item.horario,
             `"${item.telefone || ''}"`,
-            `"${(item.observacoes || '').replace(/"/g, '""')}"`
+            `"${(item.observacoes || '').replace(/"/g, '""')}"` // Escape double quotes
         ].join(','))
     ].join('\n');
 
@@ -1235,6 +1117,12 @@ async function exportToCSV() {
 
 function exportToPDF() {
     alert('Funcionalidade de exportação para PDF ainda não implementada. Considere usar a impressão do navegador (Ctrl+P) e "Salvar como PDF" ou uma biblioteca como jsPDF para uma solução mais robusta.');
+    // Para uma implementação real, você usaria uma biblioteca como jsPDF:
+    // const { jsPDF } = window.jspdf; (depois de incluir a lib)
+    // const doc = new jsPDF();
+    // doc.text("Relatório de Agendamentos", 10, 10);
+    // // ... adicionar dados da tabela ...
+    // doc.save("agendamentos.pdf");
 }
 
 function downloadFile(content, filename, contentType) {
@@ -1249,12 +1137,20 @@ function downloadFile(content, filename, contentType) {
     URL.revokeObjectURL(url);
 }
 
-function formatDateToBR(dateStr) {
-    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+function formatDateToBR(dateStr) { // YYYY-MM-DD to DD/MM/YYYY
+    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr; // Return original if invalid
     const [year, month, day] = dateStr.split('-');
     return `${day}/${month}/${year}`;
 }
 
+function formatDateToISO(dateStr) { // DD/MM/YYYY to YYYY-MM-DD
+    if (!dateStr || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return dateStr;
+    const [day, month, year] = dateStr.split('/');
+    return `${year}-${month}-${day}`;
+}
+
+
+// Inicializar ao carregar a página
 document.addEventListener('DOMContentLoaded', initializeApp);
 
 </script>
