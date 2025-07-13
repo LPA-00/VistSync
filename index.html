@@ -500,18 +500,13 @@
 
 <script>
 const horarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
-let currentAgendamentos = {}; // Local cache of agendamentos
 let selectedCollaborator = '';
 let selectedDate = ''; // Format: YYYY-MM-DD
 let selectedHour = '';
 
 const STORAGE_KEY = 'vistoriasAgendamentos';
 
-// --- DataManager START ---
-// Simulates an API or a more complex data storage mechanism.
-// For GitHub Pages without a backend, localStorage is the simplest persistent option (per browser).
-// To make this a truly shared database, you'd replace localStorage calls with API calls (fetch)
-// to a backend service (e.g., Firebase, Supabase, custom API).
+
 // --- DataManager usando Google Sheets ---
 // URL do seu Google Apps Script publicado como Web App
 const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbzAUEEKLGCEUq4meIjEiB90hafocMbgwxUVsATNonvBDarXOwl4TMsZNIDwgC5SeZzO/exec';
@@ -574,7 +569,6 @@ class DataManager {
     }
 }
 
-// --- DataManager END ---
 
 async function initializeApp() {
     currentAgendamentos = await DataManager.getAgendamentos();
@@ -616,7 +610,7 @@ function resetAgendamentoView() {
     selectedHour = '';
 }
 
-function selectCollaborator(nome) {
+window.selectCollaborator = function(nome) {
     selectedCollaborator = nome;
     document.getElementById('collaborators').classList.add('hidden');
     document.getElementById('selector').classList.remove('hidden');
@@ -685,8 +679,7 @@ async function showMonth() {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         let hasAvailable = false;
         if (new Date(dateStr) >= new Date(new Date().toDateString())) { // Only check availability for today or future
-             const allAgendamentos = await DataManager.getAllAgendamentosArray();
-			 hasAvailable = horarios.some(h => !allAgendamentos.find(a => a.key === `${selectedCollaborator}_${dateStr}_${h}`));
+             hasAvailable = horarios.some(h => !(await DataManager.getAllAgendamentosArray()).some(a => a.key === `${selectedCollaborator}_${dateStr}_${h}`]);
         }
        
         const dayCard = document.createElement('div');
@@ -748,10 +741,8 @@ async function showWeek() {
 
         let availableSlots = false;
         horarios.forEach(hora => {
-            const allAgendamentos = await DataManager.getAllAgendamentosArray();
-			horarios.forEach(hora => {
-				const key = `${selectedCollaborator}_${day.dateStr}_${hora}`;
-				if (!allAgendamentos.find(a => a.key === key)) {
+            const key = `${selectedCollaborator}_${day.dateStr}_${hora}`;
+            if (!(await DataManager.getAllAgendamentosArray()).some(a => a.key === key]) {
                 availableSlots = true;
                 const btn = document.createElement('div');
                 btn.className = 'hour';
@@ -795,10 +786,7 @@ async function openDay(dateStr) { // dateStr format YYYY-MM-DD
     } else {
         horarios.forEach(hora => {
             const key = `${selectedCollaborator}_${dateStr}_${hora}`;
-            const allAgendamentos = await DataManager.getAllAgendamentosArray();
-			horarios.forEach(hora => {
-			const key = `${selectedCollaborator}_${dateStr}_${hora}`;
-			if (!allAgendamentos.find(a => a.key === key)) {
+            if (!(await DataManager.getAllAgendamentosArray()).some(a => a.key === key]) {
                 available = true;
                 const hourBtn = document.createElement('div');
                 hourBtn.className = 'hour';
